@@ -1,0 +1,5 @@
+<resources>
+	<color name="borda_imagem">#BABABA</color>
+	<color name="linha_par">#708090</color>
+	<color name="linha_impar">#FFFFFF</color>
+</resources>

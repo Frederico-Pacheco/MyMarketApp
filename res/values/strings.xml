@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="comum_nao">Não</string>
+	<string name="comum_sim">Sim</string>
+	<string name="comum_sair_app">Deseja realmente sair do aplicativo?</string>
+	<string name="comum_deletar_registro">Deseja realmente deletar este registro?</string>
+    
+    <string name="app_name">MyMarket</string>
+    <string name="lembretes">Lembretes</string>
+    <string name="listas">Listas</string>
+    <string name="grupos">Grupos</string>
+    <string name="numerodecelular">Digite Seu Número de Celular</string>
+    <string name="acessar">Acessar</string>
+    
+    <string name="numero_invalido">Número inválido!!</string>
+    <string name="internet_fora">Verifique sua Internet!!</string>
+
+    <string name="menu_configuracoes">Configurações</string>
+    <string name="menu_lista_compras">Lista de Compras</string>
+    <string name="menu_meus_grupos">Meus Grupos</string>
+    <string name="menu_meus_lembretes">Lembretes</string>
+    <string name="menu_sair">Sair</string>
+    <string name="menu_novo">Novo</string>
+    <string name="menu_perfil">Meu Perfil</string>
+    
+    <string name="cxmenu_deletar">Deletar</string>
+    <string name="cxmenu_alterar">Alterar</string>
+    
+    <string name="server_uri">https://blablabla.heroku.com</string>
+    
+    <string name="status_offline">Offline</string>
+    <string name="status_online">Online</string>
+    
+    <!-- FORM LISTA COMPRAS -->
+    <string name="form_list_compras_nome">Nome da Lista de Compras</string>
+    <string name="btn_form_lista_compras">Confirmar</string>
+    
+    
+    <!-- TELAS -->
+    <string name="tela_lista_compras">Lista de Compras</string>
+    
+</resources>
