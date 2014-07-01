@@ -26,6 +26,7 @@ import br.com.mymarket.navegacao.EstadoListaComprasActivity;
 import br.com.mymarket.tasks.BuscarMaisListaCompraTask;
 
 public class ListaComprasActivity extends AppBaseActivity implements BuscaInformacaoDelegate {
+	
 	private List<ListaCompra> listaCompra = new ArrayList<ListaCompra>();
 	private EstadoListaComprasActivity estado;
 	private BuscarMaisListaCompraTask buscarMaisListaCompraTask;

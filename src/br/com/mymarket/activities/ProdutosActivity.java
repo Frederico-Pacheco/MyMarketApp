@@ -89,7 +89,7 @@ public class ProdutosActivity extends AppBaseActivity implements BuscaInformacao
 			alertDialog.setNegativeButton(R.string.comum_nao, null);
 			alertDialog.show();
 		}else if(item.getItemId() == R.id.cxmenu_alterar){
-//			alteraEstadoEExecuta(EstadoProdutosActivity.CADASTRAR);
+			alteraEstadoEExecuta(EstadoProdutosActivity.CADASTRAR);
 		}else if(item.getTitle().equals((String)getString(R.string.menu_val_sel_produtos))){
 			onListItemSelect(getItemSelecionado(),getPosicaoItemSelecionado());
 		}
@@ -247,5 +247,8 @@ public class ProdutosActivity extends AppBaseActivity implements BuscaInformacao
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
+
+	public void persiste(Produto produto) {
+		getProdutos().add(produto);
+	}
 }

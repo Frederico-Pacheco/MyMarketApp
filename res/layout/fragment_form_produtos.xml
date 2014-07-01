@@ -14,18 +14,14 @@
          >
 
         <EditText
-            android:id="@+id/form_list_compras_nome"
+            android:id="@+id/form_produtos_nome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/form_list_compras_nome" />
+            android:hint="@string/form_produtos_nome" />
 
-	    <DatePicker
-	        android:id="@+id/form_lista_compra_date"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content" />
 
         <Button
-            android:id="@+id/btn_form_lista_compras"
+            android:id="@+id/btn_form_produtos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/comum_confirmar" />
