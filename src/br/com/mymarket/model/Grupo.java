@@ -1,5 +1,12 @@
 package br.com.mymarket.model;
 
-public class Grupo {
+import java.io.Serializable;
+
+public class Grupo implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3100975780005996795L;
 
 }

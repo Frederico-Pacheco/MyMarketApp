@@ -13,14 +13,14 @@ import br.com.mymarket.activities.ListaComprasActivity;
 import br.com.mymarket.adapters.ListaCompraAdapter;
 import br.com.mymarket.model.ListaCompra;
 
-public class ListaDeComprasFragment extends Fragment {
+public class ListaCompraFragment extends Fragment {
 	
 	private ListView listComprasList;
     private ListaCompraAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        this.listComprasList = (ListView) inflater.inflate(R.layout.fragment_list_compras, container, false);
+        this.listComprasList = (ListView) inflater.inflate(R.layout.fragment_listview, container, false);
         final ListaComprasActivity activity = ((ListaComprasActivity)this.getActivity());
 		activity.registerForContextMenu(this.listComprasList);
 		this.listComprasList.setOnItemLongClickListener(new OnItemLongClickListener() {

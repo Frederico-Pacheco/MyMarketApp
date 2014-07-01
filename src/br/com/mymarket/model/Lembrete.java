@@ -1,10 +1,16 @@
 package br.com.mymarket.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import br.com.mymarket.utils.DateUtils;
 
-public class Lembrete {
+public class Lembrete implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5946298131703457549L;
 
 	private long id;
 	

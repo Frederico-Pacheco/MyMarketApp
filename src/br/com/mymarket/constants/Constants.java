@@ -15,13 +15,21 @@ public class Constants {
     public static final String RESULTADO_LISTACOMPRAS = "resultadoListaCompras";
     public static final String LISTACOMPRAS_RECEBIDOS = "Lista de Compras Recebidas";
     public static final String LISTA_COMPRAS_PARAM = "listaCompra";
-	/***
+
+    /***
 	 * PERFIL
 	 */
     public static final String RESULTADO_PERFIL = "resultadoPerfil";
     public static final String PERFIL_RECEBIDO = "Perfil Recebido";
     public static final String PERFIL_PARAM = "perfil";
 	
+    /***
+	 * PRODUTOS
+	 */
+    public static final String RESULTADO_PRODUTO = "resultadoProduto";
+    public static final String PRODUTO_RECEBIDO = "Produtos Recebido";
+    public static final String PRODUTO_PARAM = "produtos";
+    
 	
 	/***
 	 * GCM GOOGLE

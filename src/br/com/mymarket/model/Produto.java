@@ -1,12 +1,33 @@
 package br.com.mymarket.model;
 
-public class Produto {
+import java.io.Serializable;
+
+public class Produto implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2491497910276359249L;
 
 	private String nome;
 	
 	private Double qtde;
 	
 	private Double preco;
+	
+	private boolean comprado;
+	
+	public Produto(){
+		super();
+	}
+	
+	public Produto(String nome, Double qtde, Double preco, boolean comprado) {
+		super();
+		this.nome = nome;
+		this.qtde = qtde;
+		this.preco = preco;
+		this.comprado = comprado;
+	}
 
 	public String getNome() {
 		return nome;
@@ -31,4 +52,13 @@ public class Produto {
 	public void setPreco(Double preco) {
 		this.preco = preco;
 	}
+
+	public boolean isComprado() {
+		return comprado;
+	}
+
+	public void setComprado(boolean comprado) {
+		this.comprado = comprado;
+	}
+	
 }

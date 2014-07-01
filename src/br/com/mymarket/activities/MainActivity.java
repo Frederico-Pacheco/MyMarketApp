@@ -10,10 +10,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-import br.com.mymarket.MyMarketApplication;
 import br.com.mymarket.R;
 import br.com.mymarket.constants.Constants;
-import br.com.mymarket.delegates.BuscaPerfilDelegate;
+import br.com.mymarket.delegates.BuscaInformacaoDelegate;
 import br.com.mymarket.evento.EventoPerfilRecebido;
 import br.com.mymarket.helpers.OauthHelper;
 import br.com.mymarket.infra.CheckConnectivity;
@@ -23,7 +22,7 @@ import br.com.mymarket.navegacao.EstadoMainActivity;
 import br.com.mymarket.tasks.BuscarMeuPerfilTask;
 
 public class MainActivity extends AppBaseActivity implements
-		BuscaPerfilDelegate {
+		BuscaInformacaoDelegate {
 
 	private Pessoa perfil;
 
@@ -85,10 +84,6 @@ public class MainActivity extends AppBaseActivity implements
 		} else if (this.estado == EstadoMainActivity.OAUTH) {
 			hideSystemUI();
 		}
-	}
-
-	public MyMarketApplication getMyMarketApplication() {
-		return (MyMarketApplication) getApplication();
 	}
 
 	public void alteraEstadoEExecuta(EstadoMainActivity estado) {
@@ -188,10 +183,15 @@ public class MainActivity extends AppBaseActivity implements
 	}
 
 	@Override
-	public void processaResultado(Pessoa pessoa) {
-		atualizaPerfil(pessoa);
-		this.estado = EstadoMainActivity.PERFIL;
-		this.estado.executa(this);
+	public void processaResultado(Object obj) {
+		if(obj instanceof Pessoa){
+			Pessoa pessoa = (Pessoa) obj;
+			atualizaPerfil(pessoa);
+			this.estado = EstadoMainActivity.PERFIL;
+			this.estado.executa(this);	
+		}else if(obj instanceof Exception){
+			Toast.makeText(this, "Erro na busca dos dados", Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	private void atualizaPerfil(Pessoa pessoa) {
@@ -200,12 +200,6 @@ public class MainActivity extends AppBaseActivity implements
 
 	public Pessoa getPerfil() {
 		return perfil;
-	}
-
-	@Override
-	public void processaResultado(Exception e) {
-		Toast.makeText(this, "Erro na busca dos dados", Toast.LENGTH_SHORT)
-				.show();
 	}
 
 	public void buscarMeuPerfil() {
@@ -228,4 +222,5 @@ public class MainActivity extends AppBaseActivity implements
 	public void showNormalUI() {
 		getWindow().getDecorView().setSystemUiVisibility(defaultWindowSystem);
 	}
+
 }

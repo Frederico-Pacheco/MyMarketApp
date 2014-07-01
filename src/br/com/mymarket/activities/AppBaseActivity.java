@@ -1,5 +1,6 @@
 package br.com.mymarket.activities;
 
+import br.com.mymarket.MyMarketApplication;
 import br.com.mymarket.R;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -56,4 +57,8 @@ public abstract class AppBaseActivity extends Activity {
 		alertDialog.setNegativeButton((String)getString(R.string.comum_nao), null);
 		alertDialog.show();
 	}
+	
+    public MyMarketApplication getMyMarketApplication(){
+        return (MyMarketApplication) getApplication();
+    }
 }

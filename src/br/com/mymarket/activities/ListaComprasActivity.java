@@ -15,23 +15,21 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-import br.com.mymarket.MyMarketApplication;
 import br.com.mymarket.R;
 import br.com.mymarket.constants.Constants;
 import br.com.mymarket.constants.Extras;
-import br.com.mymarket.delegates.BuscaListaComprasDelegate;
+import br.com.mymarket.delegates.BuscaInformacaoDelegate;
 import br.com.mymarket.evento.EventoListaCompraRecebidas;
 import br.com.mymarket.infra.MyLog;
 import br.com.mymarket.model.ListaCompra;
 import br.com.mymarket.navegacao.EstadoListaComprasActivity;
 import br.com.mymarket.tasks.BuscarMaisListaCompraTask;
 
-public class ListaComprasActivity extends AppBaseActivity implements BuscaListaComprasDelegate {
+public class ListaComprasActivity extends AppBaseActivity implements BuscaInformacaoDelegate {
 	private List<ListaCompra> listaCompra = new ArrayList<ListaCompra>();
 	private EstadoListaComprasActivity estado;
 	private BuscarMaisListaCompraTask buscarMaisListaCompraTask;
     private EventoListaCompraRecebidas evento;
-    
     private ListaCompra listaCompraSelecionada = null;
 	
     @Override
@@ -44,15 +42,6 @@ public class ListaComprasActivity extends AppBaseActivity implements BuscaListaC
         getActionBar().setTitle(R.string.tela_lista_compras);
     }
 
-    public void lidaComRetorno(Exception e){
-        Toast.makeText(this, "Erro na busca dos dados", Toast.LENGTH_SHORT).show();
-    }
-
-    public void lidaComRetorno(List<ListaCompra> listas){
-        this.estado = EstadoListaComprasActivity.LISTAS_RECEBIDAS;
-        this.estado.executa(this);
-    }
-
     public void onDestroy(){
         super.onDestroy();
         MyLog.i("DESTRUIU O PICO");
@@ -60,9 +49,6 @@ public class ListaComprasActivity extends AppBaseActivity implements BuscaListaC
         unRegisterBaseActivityReceiver();
     }
 
-    public MyMarketApplication getMyMarketApplication(){
-        return (MyMarketApplication) getApplication();
-    }
 
     public void alteraEstadoEExecuta(EstadoListaComprasActivity estado){
         this.estado = estado;
@@ -104,14 +90,15 @@ public class ListaComprasActivity extends AppBaseActivity implements BuscaListaC
 	   getListaCompras().addAll(listaCompra);
     }
 
-    public void processaResultado(Exception e){
-        Toast.makeText(this, "Erro na busca dos dados", Toast.LENGTH_SHORT).show();
-    }
-
-    public void processaResultado(List<ListaCompra> listas){
-    	atualizaListaCom(listas);
-        this.estado = EstadoListaComprasActivity.LISTAS_RECEBIDAS;
-        this.estado.executa(this);
+    public void processaResultado(Object obj){
+    	if(obj instanceof Exception){
+    		Toast.makeText(this, "Erro na busca dos dados", Toast.LENGTH_SHORT).show();	
+    	}else{
+        	List<ListaCompra> listas = (List<ListaCompra>) obj;
+        	atualizaListaCom(listas);
+            this.estado = EstadoListaComprasActivity.LISTAS_RECEBIDAS;
+            this.estado.executa(this);	
+    	}
     }
 
 	public void persiste(ListaCompra listaCompra) {

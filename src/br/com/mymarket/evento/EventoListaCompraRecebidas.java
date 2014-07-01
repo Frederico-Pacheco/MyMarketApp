@@ -10,15 +10,15 @@ import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
 import br.com.mymarket.MyMarketApplication;
 import br.com.mymarket.constants.Constants;
-import br.com.mymarket.delegates.BuscaListaComprasDelegate;
+import br.com.mymarket.delegates.BuscaInformacaoDelegate;
 import br.com.mymarket.infra.MyLog;
 import br.com.mymarket.model.ListaCompra;
 
 public class EventoListaCompraRecebidas extends BroadcastReceiver{
 
-    private BuscaListaComprasDelegate delegate;
+    private BuscaInformacaoDelegate delegate;
 
-    public static EventoListaCompraRecebidas registraObservador(BuscaListaComprasDelegate delegate){
+    public static EventoListaCompraRecebidas registraObservador(BuscaInformacaoDelegate delegate){
     	EventoListaCompraRecebidas receiver = new EventoListaCompraRecebidas();
         receiver.delegate = delegate;
         LocalBroadcastManager.getInstance(delegate.getMyMarketApplication()).registerReceiver(receiver,new IntentFilter(Constants.LISTACOMPRAS_RECEBIDOS));

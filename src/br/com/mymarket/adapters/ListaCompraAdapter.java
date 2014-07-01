@@ -52,10 +52,10 @@ public class ListaCompraAdapter extends BaseAdapter {
             MyLog.i("Aproveitou a linha!!!");
         }
 
-        ListaCompra blogPost = (ListaCompra) getItem(position);
+        ListaCompra listaCompra = (ListaCompra) getItem(position);
 
-        viewHolder.nome.setText(blogPost.getNome());
-        viewHolder.data.setText(DateUtils.formatDate(blogPost.getData()));
+        viewHolder.nome.setText(listaCompra.getNome());
+        viewHolder.data.setText(DateUtils.formatDate(listaCompra.getData()));
         
 //		mudarCor(position,convertView);
         
