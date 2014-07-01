@@ -42,7 +42,7 @@ public class ProdutosAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup) {
         ViewHolder viewHolder;
-        int layout = R.layout.listview_lista_compra;
+        int layout = R.layout.listview_lista_produto;
 
         if(convertView == null){
             convertView = LayoutInflater.from(context).inflate(layout,viewGroup,false);
@@ -77,7 +77,7 @@ public class ProdutosAdapter extends BaseAdapter {
         TextView nome;
 
         ViewHolder(View view) {
-            this.nome = (TextView) view.findViewById(R.id.lista_compra_nome);
+            this.nome = (TextView) view.findViewById(R.id.lista_produto_nome);
         }
     }
 

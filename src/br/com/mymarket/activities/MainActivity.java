@@ -74,16 +74,6 @@ public class MainActivity extends AppBaseActivity implements
 		super.onResume();
 		MyLog.i("EXECUTANDO ESTADO!!" + this.estado);
 		this.estado.executa(this);
-		setUIInterface();
-	}
-
-	private void setUIInterface() {
-		if (this.estado != EstadoMainActivity.OAUTH) {
-			showNormalUI();
-			onPrepareOptionsMenu(this.mainMenu);
-		} else if (this.estado == EstadoMainActivity.OAUTH) {
-			hideSystemUI();
-		}
 	}
 
 	public void alteraEstadoEExecuta(EstadoMainActivity estado) {

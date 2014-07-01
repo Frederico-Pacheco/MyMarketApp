@@ -29,6 +29,7 @@ public class ProdutosActivity extends AppBaseActivity implements BuscaInformacao
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        registerBaseActivityReceiver();
         this.listaCompra = (ListaCompra) getIntent().getSerializableExtra(Extras.EXTRA_LISTA_COMPRA);
         this.estado = EstadoProdutosActivity.INICIO;
         this.evento = EventoProdutoRecebido.registraObservador(this);
