@@ -6,6 +6,7 @@ import java.util.List;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import br.com.mymarket.MyMarketApplication;
 import br.com.mymarket.R;
 import br.com.mymarket.constants.Constants;
+import br.com.mymarket.constants.Extras;
 import br.com.mymarket.delegates.BuscaListaComprasDelegate;
 import br.com.mymarket.evento.EventoListaCompraRecebidas;
 import br.com.mymarket.infra.MyLog;
@@ -35,7 +37,7 @@ public class ListaComprasActivity extends AppBaseActivity implements BuscaListaC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listacompras);
+        setContentView(R.layout.activity_main);
         registerBaseActivityReceiver();
         this.estado = EstadoListaComprasActivity.INICIO;
         this.evento = EventoListaCompraRecebidas.registraObservador(this);
@@ -172,16 +174,21 @@ public class ListaComprasActivity extends AppBaseActivity implements BuscaListaC
 			alertDialog.show();
 		}else if(item.getItemId() == R.id.cxmenu_alterar){
 			alteraEstadoEExecuta(EstadoListaComprasActivity.CADASTRAR_LISTA);
+		}else if(item.getTitle().equals((String)getString(R.string.menu_val_add_produtos))){
+			Intent produtos = new Intent(this,ProdutosActivity.class);
+			produtos.putExtra(Extras.EXTRA_LISTA_COMPRA, (ListaCompra)getItemSelecionado());
+			startActivity(produtos);
 		}
 		return super.onContextItemSelected(item);
 	}
 
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
+	public void onCreateContextMenu(ContextMenu menu, View v,ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menu_lista, menu);
+	    menu.setHeaderTitle(R.string.comum_selecione);  
+	    menu.add(0, v.getId(), 0, (String)getString(R.string.menu_val_add_produtos));
 	}
 
 	public void setItemSelecionado(ListaCompra itemSelecionado) {
@@ -190,6 +197,13 @@ public class ListaComprasActivity extends AppBaseActivity implements BuscaListaC
 	
 	public ListaCompra getItemSelecionado() {
 		return listaCompraSelecionada;
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		MenuItem item = menu.findItem(R.id.menu_lista_compras);
+		item.setVisible(false);
+		return super.onPrepareOptionsMenu(menu);
 	}
 
 }

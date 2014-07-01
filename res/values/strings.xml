@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="comum_nao">Não</string>
+	<string name="comum_selecione">Selecione uma opção</string>
+    <string name="comum_nao">Não</string>
 	<string name="comum_sim">Sim</string>
 	<string name="comum_sair_app">Deseja realmente sair do aplicativo?</string>
 	<string name="comum_deletar_registro">Deseja realmente deletar este registro?</string>
@@ -22,6 +23,8 @@
     <string name="menu_sair">Sair</string>
     <string name="menu_novo">Novo</string>
     <string name="menu_perfil">Meu Perfil</string>
+    
+    <string name="menu_val_add_produtos">Adicionar Produtos</string>
     
     <string name="cxmenu_deletar">Deletar</string>
     <string name="cxmenu_alterar">Alterar</string>
