@@ -18,6 +18,7 @@ public class ProdutosAdapter extends BaseAdapter {
 	
 	private Context context;
     private final List<Produto> listas;
+    
     private SparseBooleanArray mSelectedItemsIds;
 
     public ProdutosAdapter(Context mContext, List<Produto> listas) {

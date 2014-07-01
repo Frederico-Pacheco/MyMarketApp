@@ -22,6 +22,8 @@ public enum EstadoProdutosActivity {
         	activity.setarInformacoesAdapter();
         	FragmentUtils.colocaOuBuscaFragmentNaTela(activity,R.id.fragment_principal,ProdutosFragment.class,false);
         }
+    },CADASTRAR{
+    	
     };
 
     public void executa(ProdutosActivity activity){

@@ -42,6 +42,7 @@ public class ListaComprasActivity extends AppBaseActivity implements BuscaInform
         getActionBar().setTitle(R.string.tela_lista_compras);
     }
 
+    @Override
     public void onDestroy(){
         super.onDestroy();
         MyLog.i("DESTRUIU O PICO");
@@ -105,31 +106,7 @@ public class ListaComprasActivity extends AppBaseActivity implements BuscaInform
 		getListaCompras().add(listaCompra);
 	}
 	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.menu_form, menu);
-		return true;
-	}
 	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		if(item.getItemId() == R.id.menu_perfil){
-			this.estado = EstadoListaComprasActivity.LISTAS_RECEBIDAS;
-			onBackPressed();
-			return false;
-		}else if(item.getItemId() == R.id.menu_novo) {
-			setItemSelecionado(null);
-			alteraEstadoEExecuta(EstadoListaComprasActivity.CADASTRAR_LISTA);
-			return false;
-		}else if(item.getItemId() == R.id.menu_atualizar){
-			alteraEstadoEExecuta(EstadoListaComprasActivity.INICIO);
-			return false;
-		}else if(item.getItemId() == R.id.menu_sair){
-			closeAllActivities();
-			return false;
-		}
-		return super.onOptionsItemSelected(item);
-	}
 
 	@Override
 	public void onBackPressed() {
@@ -187,6 +164,31 @@ public class ListaComprasActivity extends AppBaseActivity implements BuscaInform
 		return listaCompraSelecionada;
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.menu_form, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if(item.getItemId() == R.id.menu_perfil){
+			this.estado = EstadoListaComprasActivity.LISTAS_RECEBIDAS;
+			onBackPressed();
+			return false;
+		}else if(item.getItemId() == R.id.menu_novo) {
+			setItemSelecionado(null);
+			alteraEstadoEExecuta(EstadoListaComprasActivity.CADASTRAR_LISTA);
+			return false;
+		}else if(item.getItemId() == R.id.menu_atualizar){
+			alteraEstadoEExecuta(EstadoListaComprasActivity.INICIO);
+			return false;
+		}else if(item.getItemId() == R.id.menu_sair){
+			closeAllActivities();
+			return false;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		MenuItem item = menu.findItem(R.id.menu_lista_compras);

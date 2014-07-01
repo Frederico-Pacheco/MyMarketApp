@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.ActionMode;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -54,8 +55,18 @@ public class ProdutosActivity extends AppBaseActivity implements BuscaInformacao
 		super.onCreateContextMenu(menu, v, menuInfo);
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menu_lista, menu);
-	    menu.setHeaderTitle(R.string.comum_selecione);  
-	    menu.add(0, v.getId(), 0, (String)getString(R.string.menu_val_sel_produtos));
+		menu.setHeaderTitle(R.string.comum_selecione);
+		MenuItem deletar = menu.findItem(R.id.cxmenu_deletar);
+		MenuItem alterar = menu.findItem(R.id.cxmenu_alterar);
+		if(getItemSelecionado().isComprado()){
+			deletar.setVisible(false);
+			alterar.setVisible(false);			
+		    menu.add(0, v.getId(), 0, (String)getString(R.string.cxmenu_informacao));
+		}else{
+			deletar.setVisible(true);
+			alterar.setVisible(true);
+		    menu.add(0, v.getId(), 0, (String)getString(R.string.menu_val_sel_produtos));			
+		}
 	}
 	
 	@Override
@@ -203,7 +214,8 @@ public class ProdutosActivity extends AppBaseActivity implements BuscaInformacao
 		}
 		if (getActionMode() != null)
 		{
-			getActionMode().setTitle(String.valueOf(getAdapter().getSelectedCount()) + " selecionados");
+			String selecionado = getAdapter().getSelectedCount() == 1 ? (String)getString(R.string.comum_selecionado) : (String)getString(R.string.comum_selecionados);
+			getActionMode().setTitle(String.valueOf(getAdapter().getSelectedCount()) + " " + selecionado);
 		}
 	}
   }
@@ -212,6 +224,28 @@ public class ProdutosActivity extends AppBaseActivity implements BuscaInformacao
 		MyLog.i("YAY!");
 		// TODO ABRIR POPUP INFORMANDO O PRECO PAGO.
 		//CONFIRMAR
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.simple_menu_form, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if(item.getItemId() == R.id.menu_novo) {
+			setItemSelecionado(null);
+			alteraEstadoEExecuta(EstadoProdutosActivity.CADASTRAR);
+			return false;
+		}else if(item.getItemId() == R.id.menu_atualizar){
+			alteraEstadoEExecuta(EstadoProdutosActivity.INICIO);
+			return false;
+		}else if(item.getItemId() == R.id.menu_sair){
+			closeAllActivities();
+			return false;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 	
 }
