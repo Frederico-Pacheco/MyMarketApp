@@ -3,6 +3,8 @@ package br.com.mymarket.adapters;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,18 +12,18 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import br.com.mymarket.R;
 import br.com.mymarket.infra.MyLog;
-import br.com.mymarket.model.ListaCompra;
 import br.com.mymarket.model.Produto;
-import br.com.mymarket.utils.DateUtils;
 
 public class ProdutosAdapter extends BaseAdapter {
 	
 	private Context context;
     private final List<Produto> listas;
+    private SparseBooleanArray mSelectedItemsIds;
 
     public ProdutosAdapter(Context mContext, List<Produto> listas) {
         this.context = mContext;
         this.listas = listas;
+        mSelectedItemsIds = new SparseBooleanArray();
     }
 
     @Override
@@ -55,17 +57,44 @@ public class ProdutosAdapter extends BaseAdapter {
 
         Produto produto = (Produto) getItem(position);
 
+        convertView.setBackgroundColor(mSelectedItemsIds.get(position) ? 0x9934B5E4	: Color.TRANSPARENT);
         viewHolder.nome.setText(produto.getNome());
         
 //		mudarCor(position,convertView);
         
         return convertView;
     }
+    
+    
+    public void selectView(int position, boolean value) {
+		if (value)
+			mSelectedItemsIds.put(position, value);
+		else
+			mSelectedItemsIds.delete(position);
+		notifyDataSetChanged();
+	}
+    
+    public void toggleSelection(int position) {
+		selectView(position, !mSelectedItemsIds.get(position));
+	}
 
+	public void removeSelection() {
+		mSelectedItemsIds = new SparseBooleanArray();
+		notifyDataSetChanged();
+	}
+	
+	public SparseBooleanArray getSelectedIds() {
+		return mSelectedItemsIds;
+	}
+    
     @Override
     public int getViewTypeCount() {
         return 2;
     }
+    
+    public int getSelectedCount() {
+		return mSelectedItemsIds.size();
+	}
 
 	private void mudarCor(int posicao, View view) {
 		if(posicao % 2 == 0 ){
@@ -80,6 +109,6 @@ public class ProdutosAdapter extends BaseAdapter {
             this.nome = (TextView) view.findViewById(R.id.lista_produto_nome);
         }
     }
-
+    
 
 }

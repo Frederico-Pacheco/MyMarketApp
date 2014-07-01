@@ -25,9 +25,12 @@
     <string name="menu_perfil">Meu Perfil</string>
     
     <string name="menu_val_add_produtos">Listar Produtos</string>
+    <string name="menu_val_ja_comprado">Ver Compras</string>
+    <string name="menu_val_sel_produtos">Selecionar Produtos Comprados</string>
     
     <string name="cxmenu_deletar">Deletar</string>
     <string name="cxmenu_alterar">Alterar</string>
+    <string name="cx_menu_enviar_compra">Enviar Compra</string>
     
     <string name="server_uri">https://blablabla.heroku.com</string>
     
@@ -43,3 +46,4 @@
     <string name="tela_lista_compras">Lista de Compras</string>
     
 </resources>
+

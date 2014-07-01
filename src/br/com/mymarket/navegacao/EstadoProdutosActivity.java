@@ -19,6 +19,7 @@ public enum EstadoProdutosActivity {
         }
     },LISTAGEM{
         public void executa(ProdutosActivity activity){
+        	activity.setarInformacoesAdapter();
         	FragmentUtils.colocaOuBuscaFragmentNaTela(activity,R.id.fragment_principal,ProdutosFragment.class,false);
         }
     };

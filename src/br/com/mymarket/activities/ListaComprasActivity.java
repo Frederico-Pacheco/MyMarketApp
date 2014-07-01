@@ -176,6 +176,7 @@ public class ListaComprasActivity extends AppBaseActivity implements BuscaInform
 		inflater.inflate(R.menu.menu_lista, menu);
 	    menu.setHeaderTitle(R.string.comum_selecione);  
 	    menu.add(0, v.getId(), 0, (String)getString(R.string.menu_val_add_produtos));
+	    menu.add(0, v.getId(), 0, (String)getString(R.string.menu_val_ja_comprado));
 	}
 
 	public void setItemSelecionado(ListaCompra itemSelecionado) {
