@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="comum_selecione">Selecione uma opção</string>
+	
+	<string name="comum_selecionado">selecionado</string>
+	<string name="comum_selecionados">selecionados</string>
+	
     <string name="comum_nao">Não</string>
 	<string name="comum_sim">Sim</string>
 	<string name="comum_sair_app">Deseja realmente sair do aplicativo?</string>
@@ -30,6 +34,7 @@
     
     <string name="cxmenu_deletar">Deletar</string>
     <string name="cxmenu_alterar">Alterar</string>
+    <string name="cxmenu_informacao">Ver Informações</string>
     <string name="cx_menu_enviar_compra">Enviar Compra</string>
     
     <string name="server_uri">https://blablabla.heroku.com</string>

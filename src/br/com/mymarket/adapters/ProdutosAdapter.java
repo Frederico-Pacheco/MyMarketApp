@@ -4,11 +4,13 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import br.com.mymarket.R;
 import br.com.mymarket.infra.MyLog;
@@ -60,11 +62,19 @@ public class ProdutosAdapter extends BaseAdapter {
 
         convertView.setBackgroundColor(mSelectedItemsIds.get(position) ? 0x9934B5E4	: Color.TRANSPARENT);
         viewHolder.nome.setText(produto.getNome());
-        
-//		mudarCor(position,convertView);
-        
+        setImage(viewHolder, produto);
         return convertView;
     }
+
+	private void setImage(ViewHolder viewHolder, Produto produto) {
+		Drawable res = null;
+        if(produto.isComprado()){
+        	res = context.getResources().getDrawable(android.R.drawable.arrow_down_float);
+        }else{
+        	res = context.getResources().getDrawable(android.R.drawable.arrow_up_float);
+        }
+        viewHolder.imageView.setImageDrawable(res);
+	}
     
     
     public void selectView(int position, boolean value) {
@@ -97,17 +107,13 @@ public class ProdutosAdapter extends BaseAdapter {
 		return mSelectedItemsIds.size();
 	}
 
-	private void mudarCor(int posicao, View view) {
-		if(posicao % 2 == 0 ){
-			view.setBackgroundColor(context.getResources().getColor(R.color.linha_par));
-		}
-	}
-	
     class ViewHolder {
         TextView nome;
+        ImageView imageView;
 
         ViewHolder(View view) {
             this.nome = (TextView) view.findViewById(R.id.lista_produto_nome);
+            this.imageView = (ImageView) view.findViewById(R.id.image);
         }
     }
     
