@@ -184,14 +184,14 @@ public class MainActivity extends AppBaseActivity implements
 
 	@Override
 	public void processaResultado(Object obj) {
-		if(obj instanceof Pessoa){
-			Pessoa pessoa = (Pessoa) obj;
-			atualizaPerfil(pessoa);
-			this.estado = EstadoMainActivity.PERFIL;
-			this.estado.executa(this);	
-		}else if(obj instanceof Exception){
-			Toast.makeText(this, "Erro na busca dos dados", Toast.LENGTH_SHORT).show();
-		}
+		Pessoa pessoa = (Pessoa) obj;
+		atualizaPerfil(pessoa);
+		this.estado = EstadoMainActivity.PERFIL;
+		this.estado.executa(this);	
+	}
+	
+	public void processarException(Exception e) {
+		Toast.makeText(this, "Erro na busca dos dados", Toast.LENGTH_SHORT).show();	
 	}
 
 	private void atualizaPerfil(Pessoa pessoa) {

@@ -11,23 +11,27 @@ import android.support.v4.content.LocalBroadcastManager;
 import br.com.mymarket.MyMarketApplication;
 import br.com.mymarket.constants.Constants;
 import br.com.mymarket.delegates.BuscaInformacaoDelegate;
-import br.com.mymarket.infra.MyLog;
+import br.com.mymarket.exception.MyMarketException;
 import br.com.mymarket.model.Produto;
 
 public class EventoProdutoRecebido extends BroadcastReceiver{
 
     private BuscaInformacaoDelegate delegate;
+    
+    public static final String RESULTADO_PRODUTO = "resultadoProduto";
+    public static final String PRODUTO_RECEBIDO = "Produtos Recebido";
+    public static final String PRODUTO_PARAM = "produtos";    
 
     public static EventoProdutoRecebido registraObservador(BuscaInformacaoDelegate delegate){
     	EventoProdutoRecebido receiver = new EventoProdutoRecebido();
         receiver.delegate = delegate;
-        LocalBroadcastManager.getInstance(delegate.getMyMarketApplication()).registerReceiver(receiver,new IntentFilter(Constants.PRODUTO_RECEBIDO));
+        LocalBroadcastManager.getInstance(delegate.getMyMarketApplication()).registerReceiver(receiver,new IntentFilter(PRODUTO_RECEBIDO));
         return receiver;
     }
 
     public  static void processaResultado(Context context, List<Produto> resultado, boolean sucesso){
-        Intent intent = new Intent(Constants.PRODUTO_RECEBIDO);
-        intent.putExtra(Constants.RESULTADO_PRODUTO,(Serializable) resultado);
+        Intent intent = new Intent(PRODUTO_RECEBIDO);
+        intent.putExtra(RESULTADO_PRODUTO,(Serializable) resultado);
         intent.putExtra(Constants.SUCESSO,sucesso);
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
@@ -38,7 +42,10 @@ public class EventoProdutoRecebido extends BroadcastReceiver{
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        MyLog.i("RECEBI O PRODUTO! DEU CERTO?" + intent.getBooleanExtra(Constants.SUCESSO,false));
-        delegate.processaResultado((List<Produto>) intent.getSerializableExtra(Constants.RESULTADO_PRODUTO));
+        if(intent.getBooleanExtra(Constants.SUCESSO,false) == true){
+        	delegate.processaResultado((List<Produto>) intent.getSerializableExtra(RESULTADO_PRODUTO));
+        }else{
+        	delegate.processarException(new MyMarketException());
+        }
     }
 }

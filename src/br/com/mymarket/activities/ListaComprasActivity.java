@@ -91,15 +91,15 @@ public class ListaComprasActivity extends AppBaseActivity implements BuscaInform
     }
 
     public void processaResultado(Object obj){
-    	if(obj instanceof Exception){
-    		Toast.makeText(this, "Erro na busca dos dados", Toast.LENGTH_SHORT).show();	
-    	}else{
-        	List<ListaCompra> listas = (List<ListaCompra>) obj;
-        	atualizaListaCom(listas);
-            this.estado = EstadoListaComprasActivity.LISTAS_RECEBIDAS;
-            this.estado.executa(this);	
-    	}
+    	List<ListaCompra> listas = (List<ListaCompra>) obj;
+    	atualizaListaCom(listas);
+        this.estado = EstadoListaComprasActivity.LISTAS_RECEBIDAS;
+        this.estado.executa(this);	
     }
+    
+	public void processarException(Exception e) {
+		Toast.makeText(this, "Erro na busca dos dados", Toast.LENGTH_SHORT).show();	
+	}
 
 	public void persiste(ListaCompra listaCompra) {
 		getListaCompras().add(listaCompra);

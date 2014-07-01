@@ -45,15 +45,15 @@ public class ProdutosActivity extends AppBaseActivity implements BuscaInformacao
     }
 
     public void processaResultado(Object obj){
-    	if(obj instanceof Exception){
-    		Toast.makeText(this, "Erro na busca dos dados", Toast.LENGTH_SHORT).show();	
-    	}else{
-        	List<Produto> listas = (List<Produto>) obj;
-        	atualizaListaCom(listas);  
-            this.estado = EstadoProdutosActivity.LISTAGEM;
-            this.estado.executa(this);
-    	}
+    	List<Produto> listas = (List<Produto>) obj;
+    	atualizaListaCom(listas);  
+        this.estado = EstadoProdutosActivity.LISTAGEM;
+        this.estado.executa(this);
     }
+    
+	public void processarException(Exception e) {
+		Toast.makeText(this, "Erro na busca dos dados", Toast.LENGTH_SHORT).show();	
+	}
 	
 	private void atualizaListaCom(List<Produto> listas) {
 	   getProdutos().clear();
