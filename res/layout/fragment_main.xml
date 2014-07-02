@@ -12,11 +12,26 @@ android:layout_height="match_parent">
 	      android:id="@+id/status_conexao" 
 	      android:textColor="@color/abc_search_url_text_selected"/>
 	    
-	    <TextView android:layout_width="match_parent"
+	    <TextView 
+	      android:layout_width="match_parent"
 	      android:layout_height="wrap_content" 
 	      android:text="INFO BLABLABLA"
 	      android:id="@+id/info"
 	      android:textColor="@color/abc_search_url_text_selected"/>
 	    
+	    
+	    
+	    <EditText 
+	        android:id="@+id/teste_lembrete"
+			android:layout_width="match_parent"
+	      	android:layout_height="wrap_content"	        
+	        />
+
+	    <Button 
+	        android:id="@+id/botao_lembrete"
+			android:layout_width="match_parent"
+	      	android:layout_height="wrap_content"	        
+			android:text="Notificar"	        
+	        />
 	</LinearLayout>
 </ScrollView>

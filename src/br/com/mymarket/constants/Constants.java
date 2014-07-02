@@ -16,4 +16,7 @@ public class Constants {
 	public static final String REGISTERED = "registeredInGCM";
 	public static final String REGISTRATION_ID = "registrationId";
 	public static final String GCM_SERVER_ID = "GCM_SERVER_ID";
+	
+	
+	public static final String LEMBRETE_ACTION = "br.com.mymarket.NOTIFICATION_ALARM";
 }

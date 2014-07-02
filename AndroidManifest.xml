@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/> 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     
     <application
         android:allowBackup="true"
@@ -40,6 +41,13 @@
         <activity
             android:name="br.com.mymarket.activities.GrupoActivity"
             android:label="@string/app_name" >
-		</activity>          
+		</activity>     
+		
+        <receiver android:name="br.com.mymarket.LembretesReceiver" >
+		    <intent-filter>
+		        <action android:name="br.com.mymarket.NOTIFICATION_ALARM" />
+		    </intent-filter>
+		</receiver>
+		    
     </application>
 </manifest>
