@@ -129,6 +129,7 @@ public class MainActivity extends AppBaseActivity implements
 			startActivity(new Intent(this, ListaComprasActivity.class));
 			return false;
 		} else if (item.getItemId() == R.id.menu_meus_grupos) {
+			startActivity(new Intent(this, GrupoActivity.class));
 			return false;
 		} else if (item.getItemId() == R.id.menu_configuracoes) {
 			return false;
@@ -180,10 +181,6 @@ public class MainActivity extends AppBaseActivity implements
 		this.estado.executa(this);	
 	}
 	
-	public void processarException(Exception e) {
-		Toast.makeText(this, "Erro na busca dos dados", Toast.LENGTH_SHORT).show();	
-	}
-
 	private void atualizaPerfil(Pessoa pessoa) {
 		this.perfil = pessoa;
 	}

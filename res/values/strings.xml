@@ -7,7 +7,9 @@
 	<string name="comum_sim">Sim</string>
 	<string name="comum_sair_app">Deseja realmente sair do aplicativo?</string>
 	<string name="comum_deletar_registro">Deseja realmente deletar este registro?</string>
+	<string name="comum_confirmar_compra">Confirme o valor desta compra.</string>
     <string name="comum_confirmar">Confirmar</string>
+    <string name="comum_cancelar">Cancelar</string>
     <string name="comum_inserir">Inserir</string>
     <string name="comum_alterar">Alterar</string>
     
@@ -50,6 +52,9 @@
     
     <!-- TELAS -->
     <string name="tela_lista_compras">Lista de Compras</string>
+    
+    <!-- POPUP VALOR COMPRA -->
+    <string name="popup_valor_compra">Insira o valor da compra.</string>
     
 </resources>
 

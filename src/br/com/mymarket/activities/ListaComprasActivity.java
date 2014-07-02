@@ -14,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 import br.com.mymarket.R;
 import br.com.mymarket.constants.Constants;
 import br.com.mymarket.constants.Extras;
@@ -99,19 +98,14 @@ public class ListaComprasActivity extends AppBaseActivity implements BuscaInform
         this.estado.executa(this);	
     }
     
-	public void processarException(Exception e) {
-		Toast.makeText(this, "Erro na busca dos dados", Toast.LENGTH_SHORT).show();	
-	}
 
 	public void persiste(ListaCompra listaCompra) {
 		getListaCompras().add(listaCompra);
 	}
-	
-	
 
 	@Override
 	public void onBackPressed() {
-		if(this.estado == EstadoListaComprasActivity.CADASTRAR_LISTA){
+		if(this.estado == EstadoListaComprasActivity.CADASTRAR_LISTA || this.estado == EstadoListaComprasActivity.INFORMACOES_COMPRAS){
 			alteraEstadoEExecuta(EstadoListaComprasActivity.LISTAS_RECEBIDAS);//FIXME ALTERAR INICIO
 			return;
 		}
@@ -143,6 +137,8 @@ public class ListaComprasActivity extends AppBaseActivity implements BuscaInform
 			Intent produtos = new Intent(this,ProdutosActivity.class);
 			produtos.putExtra(Extras.EXTRA_LISTA_COMPRA, (ListaCompra)getItemSelecionado());
 			startActivity(produtos);
+		}else if(item.getTitle().equals((String)getString(R.string.menu_val_ja_comprado))){
+			alteraEstadoEExecuta(EstadoListaComprasActivity.INFORMACOES_COMPRAS);
 		}
 		return super.onContextItemSelected(item);
 	}
@@ -180,6 +176,9 @@ public class ListaComprasActivity extends AppBaseActivity implements BuscaInform
 		}else if(item.getItemId() == R.id.menu_novo) {
 			setItemSelecionado(null);
 			alteraEstadoEExecuta(EstadoListaComprasActivity.CADASTRAR_LISTA);
+			return false;
+		} else if (item.getItemId() == R.id.menu_meus_grupos) {
+			startActivity(new Intent(this, GrupoActivity.class));
 			return false;
 		}else if(item.getItemId() == R.id.menu_atualizar){
 			alteraEstadoEExecuta(EstadoListaComprasActivity.INICIO);

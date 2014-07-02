@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.widget.Toast;
 
 public abstract class AppBaseActivity extends Activity {
 	
@@ -61,4 +62,8 @@ public abstract class AppBaseActivity extends Activity {
     public MyMarketApplication getMyMarketApplication(){
         return (MyMarketApplication) getApplication();
     }
+    
+	public void processarException(Exception e) {
+		Toast.makeText(this, "Erro na busca dos dados", Toast.LENGTH_SHORT).show();	
+	}
 }
