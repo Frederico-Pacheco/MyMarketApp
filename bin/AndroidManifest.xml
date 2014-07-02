@@ -21,15 +21,20 @@
         <activity
             android:name="br.com.mymarket.activities.MainActivity"
             android:label="@string/app_name" >
-            <intent-filter>
+			<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>   
+            </intent-filter>
         </activity>
         
         <activity
             android:name="br.com.mymarket.activities.ListaComprasActivity"
             android:label="@string/app_name" >
 		</activity>
+		
+        <activity
+            android:name="br.com.mymarket.activities.ProdutosActivity"
+            android:label="@string/app_name" >
+		</activity>        
     </application>
 </manifest>
