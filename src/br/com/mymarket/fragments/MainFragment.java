@@ -47,7 +47,7 @@ public class MainFragment extends Fragment {
 			@Override
 			public void onClick(View view) {
 				try {
-					activity.getMyMarketApplication().criarLembrete(new Lembrete("teste", DateUtils.toDate(teste.getText().toString())));
+					activity.getMyMarketApplication().criarLembrete(new Lembrete("teste " + System.currentTimeMillis(), DateUtils.toDate(teste.getText().toString())));
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
