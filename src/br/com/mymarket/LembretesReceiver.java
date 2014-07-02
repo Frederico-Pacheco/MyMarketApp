@@ -32,7 +32,7 @@ public class LembretesReceiver extends BroadcastReceiver {
                 .setContentText(lembrete.getNome())
                 .setSmallIcon(R.drawable.ic_launcher).build();
 		        NotificationManager manager = (NotificationManager) context.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-		        manager.notify(1, notification);
+		        manager.notify((int)lembrete.getDataCriacao().getTimeInMillis(), notification);
 		        
 	            wl.release();
             }
