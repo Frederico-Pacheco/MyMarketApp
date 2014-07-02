@@ -25,6 +25,7 @@ import br.com.mymarket.infra.ActionModeCallback;
 import br.com.mymarket.infra.MyLog;
 import br.com.mymarket.model.ListaCompra;
 import br.com.mymarket.model.Produto;
+import br.com.mymarket.navegacao.EstadoListaComprasActivity;
 import br.com.mymarket.navegacao.EstadoProdutosActivity;
 import br.com.mymarket.tasks.BuscarProdutosTask;
 
@@ -197,7 +198,10 @@ public class ProdutosActivity extends AppBaseActivity implements BuscaInformacao
 		if(getActionMode() != null){
 			resetActionMode();
 			return;
-		}
+		}else if(this.estado == EstadoProdutosActivity.CADASTRAR){
+			alteraEstadoEExecuta(EstadoProdutosActivity.INICIO);//FIXME ALTERAR INICIO
+			return;
+		}		
 		super.onBackPressed();
 	}
 	
