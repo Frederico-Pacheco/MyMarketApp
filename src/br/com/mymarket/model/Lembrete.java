@@ -1,6 +1,7 @@
 package br.com.mymarket.model;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 
 import br.com.mymarket.utils.DateUtils;
@@ -20,9 +21,12 @@ public class Lembrete implements Serializable {
 	
 	private Pessoa pessoa;
 	
+	private Calendar dataCriacao;
+	
 	public Lembrete(String nome, Date data) {
 		this.nome=nome;
 		this.data=data;
+		this.dataCriacao = Calendar.getInstance();
 	}
 
 	public long getId() {
@@ -55,6 +59,14 @@ public class Lembrete implements Serializable {
 
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
+	}
+	
+	public Calendar getDataCriacao() {
+		return dataCriacao;
+	}
+	
+	public void setDataCriacao(Calendar dataCriacao) {
+		this.dataCriacao = dataCriacao;
 	}
 
 	public String getFormatDate() {
