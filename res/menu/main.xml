@@ -6,7 +6,7 @@
     <item
         android:id="@+id/menu_atualizar"
         android:orderInCategory="100"
-        android:showAsAction="always"
+        app:showAsAction="always"
         android:icon="@android:drawable/ic_menu_rotate"
         />    
     
