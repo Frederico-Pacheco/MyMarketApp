@@ -18,10 +18,10 @@ import br.com.mymarket.R;
 import br.com.mymarket.constants.Constants;
 import br.com.mymarket.constants.Extras;
 import br.com.mymarket.delegates.BuscaInformacaoDelegate;
-import br.com.mymarket.evento.EventoListaCompraRecebidas;
 import br.com.mymarket.infra.MyLog;
 import br.com.mymarket.model.ListaCompra;
 import br.com.mymarket.navegacao.EstadoListaComprasActivity;
+import br.com.mymarket.receivers.ListaCompraReceiver;
 import br.com.mymarket.tasks.BuscarMaisListaCompraTask;
 
 public class ListaComprasActivity extends AppBaseActivity implements BuscaInformacaoDelegate {
@@ -38,7 +38,7 @@ public class ListaComprasActivity extends AppBaseActivity implements BuscaInform
         setContentView(R.layout.activity_main);
         registerBaseActivityReceiver();
         this.estado = EstadoListaComprasActivity.INICIO;
-        this.evento = new EventoListaCompraRecebidas();
+        this.evento = new ListaCompraReceiver();
         this.evento.registraObservador(this);
         getActionBar().setTitle(R.string.tela_lista_compras);
     }

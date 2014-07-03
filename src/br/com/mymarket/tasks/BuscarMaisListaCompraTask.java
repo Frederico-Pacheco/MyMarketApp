@@ -4,7 +4,7 @@ import java.util.List;
 
 import android.os.AsyncTask;
 import br.com.mymarket.MyMarketApplication;
-import br.com.mymarket.delegates.EventoDelegate;
+import br.com.mymarket.delegates.ReceiverDelegate;
 import br.com.mymarket.infra.MyLog;
 import br.com.mymarket.mocks.ListaComprasMocks;
 import br.com.mymarket.model.ListaCompra;
@@ -15,9 +15,9 @@ public class BuscarMaisListaCompraTask extends AsyncTask<Pagina, Void, List<List
     private Exception erro;
     //private BuscaMaisPostsDelegate delegate;
     private MyMarketApplication application;
-    private EventoDelegate evento;
+    private ReceiverDelegate evento;
     
-    public BuscarMaisListaCompraTask(MyMarketApplication application,EventoDelegate evento){
+    public BuscarMaisListaCompraTask(MyMarketApplication application,ReceiverDelegate evento){
         this.application = application;
         this.application.registra(this);
         this.evento = evento;

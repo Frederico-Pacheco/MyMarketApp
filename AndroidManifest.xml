@@ -43,7 +43,7 @@
             android:label="@string/app_name" >
 		</activity>     
 		
-        <receiver android:name="br.com.mymarket.LembretesReceiver" >
+        <receiver android:name="br.com.mymarket.LembretesBroadcast" >
 		    <intent-filter>
 		        <action android:name="br.com.mymarket.NOTIFICATION_ALARM" />
 		    </intent-filter>

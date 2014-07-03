@@ -13,12 +13,12 @@ import android.widget.Toast;
 import br.com.mymarket.R;
 import br.com.mymarket.constants.Constants;
 import br.com.mymarket.delegates.BuscaInformacaoDelegate;
-import br.com.mymarket.evento.EventoPerfilRecebido;
 import br.com.mymarket.helpers.OauthHelper;
 import br.com.mymarket.infra.CheckConnectivity;
 import br.com.mymarket.infra.MyLog;
 import br.com.mymarket.model.Pessoa;
 import br.com.mymarket.navegacao.EstadoMainActivity;
+import br.com.mymarket.receivers.PerfilReceiver;
 import br.com.mymarket.tasks.BuscarMeuPerfilTask;
 
 public class MainActivity extends AppBaseActivity implements
@@ -50,7 +50,7 @@ public class MainActivity extends AppBaseActivity implements
 		} else {
 			this.estado = EstadoMainActivity.OAUTH;
 		}
-		this.evento = new EventoPerfilRecebido().registraObservador(this);
+		this.evento = new PerfilReceiver().registraObservador(this);
 	}
 
 	@Override

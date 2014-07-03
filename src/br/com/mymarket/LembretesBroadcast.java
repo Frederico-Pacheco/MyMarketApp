@@ -10,11 +10,12 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.PowerManager;
+import br.com.mymarket.R;
 import br.com.mymarket.constants.Constants;
 import br.com.mymarket.constants.Extras;
 import br.com.mymarket.model.Lembrete;
 
-public class LembretesReceiver extends BroadcastReceiver {
+public class LembretesBroadcast extends BroadcastReceiver {
 	
 	    @Override
 	    public void onReceive(Context context, Intent intent) {

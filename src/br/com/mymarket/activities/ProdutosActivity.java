@@ -21,12 +21,12 @@ import br.com.mymarket.adapters.ProdutosAdapter;
 import br.com.mymarket.constants.Constants;
 import br.com.mymarket.constants.Extras;
 import br.com.mymarket.delegates.BuscaInformacaoDelegate;
-import br.com.mymarket.evento.EventoProdutoRecebido;
 import br.com.mymarket.infra.ActionModeProdutoCallback;
 import br.com.mymarket.infra.MyLog;
 import br.com.mymarket.model.ListaCompra;
 import br.com.mymarket.model.Produto;
 import br.com.mymarket.navegacao.EstadoProdutosActivity;
+import br.com.mymarket.receivers.ProdutoReceiver;
 import br.com.mymarket.tasks.BuscarProdutosTask;
 
 public class ProdutosActivity extends AppBaseActivity implements BuscaInformacaoDelegate{
@@ -47,7 +47,7 @@ public class ProdutosActivity extends AppBaseActivity implements BuscaInformacao
         registerBaseActivityReceiver();
         this.listaCompra = (ListaCompra) getIntent().getSerializableExtra(Extras.EXTRA_LISTA_COMPRA);
         this.estado = EstadoProdutosActivity.INICIO;
-        this.evento = new EventoProdutoRecebido().registraObservador(this);
+        this.evento = new ProdutoReceiver().registraObservador(this);
 	}
 	
 	@Override

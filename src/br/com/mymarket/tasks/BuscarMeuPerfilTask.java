@@ -2,7 +2,7 @@ package br.com.mymarket.tasks;
 
 import android.os.AsyncTask;
 import br.com.mymarket.MyMarketApplication;
-import br.com.mymarket.delegates.EventoDelegate;
+import br.com.mymarket.delegates.ReceiverDelegate;
 import br.com.mymarket.infra.MyLog;
 import br.com.mymarket.mocks.PessoasMock;
 import br.com.mymarket.model.Pessoa;
@@ -13,9 +13,9 @@ public class BuscarMeuPerfilTask extends AsyncTask<Pagina, Void, Pessoa> {
     private Exception erro;
     private MyMarketApplication application;
     private String myPhoneNumber;
-    private EventoDelegate evento;
+    private ReceiverDelegate evento;
     
-    public BuscarMeuPerfilTask(MyMarketApplication application, String myPhoneNumber,EventoDelegate evento){
+    public BuscarMeuPerfilTask(MyMarketApplication application, String myPhoneNumber,ReceiverDelegate evento){
         this.application = application;
         this.myPhoneNumber = myPhoneNumber;
         this.evento = evento;
