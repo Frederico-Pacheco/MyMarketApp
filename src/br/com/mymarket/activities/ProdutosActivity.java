@@ -34,7 +34,6 @@ public class ProdutosActivity extends AppBaseActivity implements BuscaInformacao
 	private ListaCompra listaCompra = null;
 	private List<Produto> produtos = new ArrayList<Produto>();
 	private EstadoProdutosActivity estado;
-	private EventoProdutoRecebido evento;
 	private BuscarProdutosTask buscarProdutosTask;
 	private Produto itemSelecionado;
 	private int posicaoItemSelecionado;
@@ -48,7 +47,7 @@ public class ProdutosActivity extends AppBaseActivity implements BuscaInformacao
         registerBaseActivityReceiver();
         this.listaCompra = (ListaCompra) getIntent().getSerializableExtra(Extras.EXTRA_LISTA_COMPRA);
         this.estado = EstadoProdutosActivity.INICIO;
-        this.evento = EventoProdutoRecebido.registraObservador(this);
+        this.evento = new EventoProdutoRecebido().registraObservador(this);
 	}
 	
 	@Override
@@ -100,7 +99,7 @@ public class ProdutosActivity extends AppBaseActivity implements BuscaInformacao
 	}
 	
 	public void buscarProdutos() {
-        this.buscarProdutosTask = new BuscarProdutosTask(getMyMarketApplication(),this.listaCompra);
+        this.buscarProdutosTask = new BuscarProdutosTask(getMyMarketApplication(),this.listaCompra,this.evento);
         this.buscarProdutosTask.execute();
 	}
 
@@ -125,14 +124,6 @@ public class ProdutosActivity extends AppBaseActivity implements BuscaInformacao
 		return this.produtos;
 	}
 
-	@Override
-    public void onDestroy(){
-        super.onDestroy();
-        MyLog.i("DESTRUIU O PICO");
-        this.evento.desregistra(getMyMarketApplication());
-        unRegisterBaseActivityReceiver();
-    }
-    
     @Override
     public void onSaveInstanceState(Bundle outState){
         super.onSaveInstanceState(outState);
@@ -191,6 +182,7 @@ public class ProdutosActivity extends AppBaseActivity implements BuscaInformacao
 			onListItemSelect(produto,posicao);
 		}
 	}
+	
 	@Override
 	public void onBackPressed() {
 		if(getActionMode() != null){

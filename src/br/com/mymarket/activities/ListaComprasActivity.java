@@ -29,7 +29,7 @@ public class ListaComprasActivity extends AppBaseActivity implements BuscaInform
 	private List<ListaCompra> listaCompra = new ArrayList<ListaCompra>();
 	private EstadoListaComprasActivity estado;
 	private BuscarMaisListaCompraTask buscarMaisListaCompraTask;
-    private EventoListaCompraRecebidas evento;
+    
     private ListaCompra listaCompraSelecionada = null;
 	
     @Override
@@ -38,18 +38,10 @@ public class ListaComprasActivity extends AppBaseActivity implements BuscaInform
         setContentView(R.layout.activity_main);
         registerBaseActivityReceiver();
         this.estado = EstadoListaComprasActivity.INICIO;
-        this.evento = EventoListaCompraRecebidas.registraObservador(this);
+        this.evento = new EventoListaCompraRecebidas();
+        this.evento.registraObservador(this);
         getActionBar().setTitle(R.string.tela_lista_compras);
     }
-
-    @Override
-    public void onDestroy(){
-        super.onDestroy();
-        MyLog.i("DESTRUIU O PICO");
-        this.evento.desregistra(getMyMarketApplication());
-        unRegisterBaseActivityReceiver();
-    }
-
 
     public void alteraEstadoEExecuta(EstadoListaComprasActivity estado){
         this.estado = estado;
@@ -78,7 +70,7 @@ public class ListaComprasActivity extends AppBaseActivity implements BuscaInform
     }
 
 	public void buscarListasDeCompras() {
-        this.buscarMaisListaCompraTask = new BuscarMaisListaCompraTask(getMyMarketApplication());
+        this.buscarMaisListaCompraTask = new BuscarMaisListaCompraTask(getMyMarketApplication(),this.evento);
         this.buscarMaisListaCompraTask.execute();
 	}
 

@@ -11,10 +11,11 @@ import android.support.v4.content.LocalBroadcastManager;
 import br.com.mymarket.MyMarketApplication;
 import br.com.mymarket.constants.Constants;
 import br.com.mymarket.delegates.BuscaInformacaoDelegate;
+import br.com.mymarket.delegates.EventoDelegate;
 import br.com.mymarket.exception.MyMarketException;
 import br.com.mymarket.model.Produto;
 
-public class EventoProdutoRecebido extends BroadcastReceiver{
+public class EventoProdutoRecebido extends BroadcastReceiver implements EventoDelegate{
 
     private BuscaInformacaoDelegate delegate;
     
@@ -22,14 +23,15 @@ public class EventoProdutoRecebido extends BroadcastReceiver{
     public static final String PRODUTO_RECEBIDO = "Produtos Recebido";
     public static final String PRODUTO_PARAM = "produtos";    
 
-    public static EventoProdutoRecebido registraObservador(BuscaInformacaoDelegate delegate){
+    public EventoProdutoRecebido registraObservador(BuscaInformacaoDelegate delegate){
     	EventoProdutoRecebido receiver = new EventoProdutoRecebido();
         receiver.delegate = delegate;
         LocalBroadcastManager.getInstance(delegate.getMyMarketApplication()).registerReceiver(receiver,new IntentFilter(PRODUTO_RECEBIDO));
         return receiver;
     }
 
-    public  static void processaResultado(Context context, List<Produto> resultado, boolean sucesso){
+    public void processaResultado(Context context,Object obj, boolean sucesso){
+    	List<Produto> resultado = (List<Produto>) obj;
         Intent intent = new Intent(PRODUTO_RECEBIDO);
         intent.putExtra(RESULTADO_PRODUTO,(Serializable) resultado);
         intent.putExtra(Constants.SUCESSO,sucesso);

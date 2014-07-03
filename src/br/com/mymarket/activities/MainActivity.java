@@ -29,7 +29,6 @@ public class MainActivity extends AppBaseActivity implements
 	private EstadoMainActivity estado;
 	private OauthHelper oauthHelper;
 	private Menu mainMenu;
-	private EventoPerfilRecebido evento;
 	private BuscarMeuPerfilTask buscarMeuPerfilTask;
 	private String myPhoneNumber;
 	private int defaultWindowSystem;
@@ -51,7 +50,7 @@ public class MainActivity extends AppBaseActivity implements
 		} else {
 			this.estado = EstadoMainActivity.OAUTH;
 		}
-		this.evento = EventoPerfilRecebido.registraObservador(this);
+		this.evento = new EventoPerfilRecebido().registraObservador(this);
 	}
 
 	@Override
@@ -150,13 +149,6 @@ public class MainActivity extends AppBaseActivity implements
 		super.onBackPressed();
 	}
 
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		this.evento.desregistra(getMyMarketApplication());
-		unRegisterBaseActivityReceiver();
-	}
-
 	public void acessarApk(View view) {
 		EditText cellPhone = (EditText) findViewById(R.id.oat_cellphone);
 		if (CheckConnectivity.isOffLine(this)) {
@@ -190,8 +182,7 @@ public class MainActivity extends AppBaseActivity implements
 	}
 
 	public void buscarMeuPerfil() {
-		this.buscarMeuPerfilTask = new BuscarMeuPerfilTask(
-				getMyMarketApplication(), this.myPhoneNumber);
+		this.buscarMeuPerfilTask = new BuscarMeuPerfilTask(getMyMarketApplication(), this.myPhoneNumber,this.evento);
 		this.buscarMeuPerfilTask.execute();
 	}
 

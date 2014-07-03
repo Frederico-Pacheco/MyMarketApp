@@ -10,7 +10,10 @@ import br.com.mymarket.model.Grupo;
 import br.com.mymarket.navegacao.EstadoGrupoActivity;
 
 public class GrupoActivity extends AppBaseActivity implements BuscaInformacaoDelegate{
-
+	
+	private EstadoGrupoActivity estado;
+	
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

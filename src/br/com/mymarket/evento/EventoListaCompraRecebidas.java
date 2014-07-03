@@ -11,10 +11,11 @@ import android.support.v4.content.LocalBroadcastManager;
 import br.com.mymarket.MyMarketApplication;
 import br.com.mymarket.constants.Constants;
 import br.com.mymarket.delegates.BuscaInformacaoDelegate;
+import br.com.mymarket.delegates.EventoDelegate;
 import br.com.mymarket.exception.MyMarketException;
 import br.com.mymarket.model.ListaCompra;
 
-public class EventoListaCompraRecebidas extends BroadcastReceiver{
+public class EventoListaCompraRecebidas extends BroadcastReceiver implements EventoDelegate{
 
     private BuscaInformacaoDelegate delegate;
     
@@ -22,14 +23,15 @@ public class EventoListaCompraRecebidas extends BroadcastReceiver{
     public static final String LISTACOMPRAS_RECEBIDOS = "Lista de Compras Recebidas";
     public static final String LISTA_COMPRAS_PARAM = "listaCompra";    
 
-    public static EventoListaCompraRecebidas registraObservador(BuscaInformacaoDelegate delegate){
+    public EventoListaCompraRecebidas registraObservador(BuscaInformacaoDelegate delegate){
     	EventoListaCompraRecebidas receiver = new EventoListaCompraRecebidas();
         receiver.delegate = delegate;
         LocalBroadcastManager.getInstance(delegate.getMyMarketApplication()).registerReceiver(receiver,new IntentFilter(LISTACOMPRAS_RECEBIDOS));
         return receiver;
     }
 
-    public static void processaResultado(Context context, List<ListaCompra> resultado, boolean sucesso){
+    public void processaResultado(Context context, Object obj, boolean sucesso){
+    	List<ListaCompra> resultado = (List<ListaCompra>) obj;
         Intent intent = new Intent(LISTACOMPRAS_RECEBIDOS);
         intent.putExtra(RESULTADO_LISTACOMPRAS,(Serializable) resultado);
         intent.putExtra(Constants.SUCESSO,sucesso);

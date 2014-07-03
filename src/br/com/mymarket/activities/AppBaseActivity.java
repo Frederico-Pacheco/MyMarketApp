@@ -1,7 +1,5 @@
 package br.com.mymarket.activities;
 
-import br.com.mymarket.MyMarketApplication;
-import br.com.mymarket.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
@@ -11,14 +9,17 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.widget.Toast;
+import br.com.mymarket.MyMarketApplication;
+import br.com.mymarket.R;
+import br.com.mymarket.delegates.EventoDelegate;
+import br.com.mymarket.infra.MyLog;
 
 public abstract class AppBaseActivity extends Activity {
 	
 	public static final String FINISH_ALL_ACTIVITIES_ACTIVITY_ACTION = "br.com.mymarket.activities.FINISH_ALL_ACTIVITIES_ACTIVITY_ACTION";
-
 	private BaseActivityReceiver baseActivityReceiver = new BaseActivityReceiver();
-
 	public static final IntentFilter INTENT_FILTER = createIntentFilter();
+	protected EventoDelegate evento;
 
 	private static IntentFilter createIntentFilter() {
 		IntentFilter filter = new IntentFilter();
@@ -33,6 +34,15 @@ public abstract class AppBaseActivity extends Activity {
 	protected void unRegisterBaseActivityReceiver() {
 		unregisterReceiver(baseActivityReceiver);
 	}
+	
+	
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        MyLog.i("DESTRUIU O PICO");
+        this.evento.desregistra(getMyMarketApplication());
+        unRegisterBaseActivityReceiver();
+    }
 
 	public class BaseActivityReceiver extends BroadcastReceiver {
 		@Override
