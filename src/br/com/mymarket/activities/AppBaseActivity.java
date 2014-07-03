@@ -26,6 +26,17 @@ public abstract class AppBaseActivity extends Activity {
 		filter.addAction(FINISH_ALL_ACTIVITIES_ACTIVITY_ACTION);
 		return filter;
 	}
+	
+	
+	
+	protected void set(){
+		AdRequest request = new AdRequest.Builder();
+		request.addTestDevice(AdRequest.DEVICE_ID_EMULATOR);
+        request.build();
+		AdView adView = (AdView) findViewById(R.id.ad);
+		adView.loadAd(request);
+	}
+	
 
 	protected void registerBaseActivityReceiver() {
 		registerReceiver(baseActivityReceiver, INTENT_FILTER);
