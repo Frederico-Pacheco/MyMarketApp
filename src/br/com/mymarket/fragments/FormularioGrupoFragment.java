@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import br.com.mymarket.R;
 import br.com.mymarket.activities.GrupoActivity;
@@ -24,6 +26,28 @@ public class FormularioGrupoFragment extends Fragment {
     	formularioGrupoHelper = new FormularioGrupoHelper(view);
     	formularioGrupoHelper.colocarGrupoNoFormulario(activity.getItemSelecionado());
     	Button button = (Button)view.findViewById(R.id.btn_form);
+    	
+    	
+    	AutoCompleteTextView textView = (AutoCompleteTextView) view.findViewById(R.id.search_contatos);
+    	String[] countries = getResources().getStringArray(R.array.countries_array);
+    	ArrayAdapter<String> testAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, countries);
+    	textView.setAdapter(testAdapter);
+    	
+//    	EditText editText = (EditText)view.findViewById(R.id.search_contatos);
+//    	editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//    	    @Override
+//    	    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//    	        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+//    	        	MyLog.i("BUSCAR");
+//    	            performSearch();//write code in function what you wanna do....
+//    	            return true;
+//    	        }
+//    	        return false;
+//    	    }
+//
+//    	});
+    	
+    	
     	button.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -35,4 +59,9 @@ public class FormularioGrupoFragment extends Fragment {
 		});
         return view;
     }
+    
+	public void performSearch() {
+		// TODO Auto-generated method stub
+		
+	}
 }

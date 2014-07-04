@@ -51,7 +51,8 @@
     <string name="form_produtos_nome">Nome do Produto</string>
     <!-- FORM GRUPO -->
     <string name="form_grupo_nome">Nome do Grupo</string>
-    
+
+    <string name="buscar_contatos">Buscar Contatos</string>
     
     <!-- TELAS -->
     <string name="tela_lista_compras">Lista de Compras</string>
