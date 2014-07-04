@@ -5,26 +5,21 @@ import java.util.List;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
 import br.com.mymarket.R;
 import br.com.mymarket.constants.Constants;
-import br.com.mymarket.constants.Extras;
 import br.com.mymarket.delegates.BuscaInformacaoDelegate;
 import br.com.mymarket.infra.MyLog;
 import br.com.mymarket.model.Grupo;
-import br.com.mymarket.model.ListaCompra;
 import br.com.mymarket.navegacao.EstadoGrupoActivity;
-import br.com.mymarket.navegacao.EstadoListaComprasActivity;
-import br.com.mymarket.navegacao.EstadoMainActivity;
-import br.com.mymarket.navegacao.EstadoProdutosActivity;
 import br.com.mymarket.receivers.GrupoReceiver;
 import br.com.mymarket.tasks.BuscarGrupoTask;
 
@@ -105,7 +100,7 @@ public class GrupoActivity extends AppBaseActivity implements BuscaInformacaoDel
 			alertDialog.setNegativeButton(R.string.comum_nao, null);
 			alertDialog.show();
 		}else if(item.getItemId() == R.id.cxmenu_alterar){
-//			alteraEstadoEExecuta(EstadoListaComprasActivity.CADASTRAR_LISTA); FIXME
+			alteraEstadoEExecuta(EstadoGrupoActivity.CADASTRAR);
 		}
 		return super.onContextItemSelected(item);
 	}
@@ -117,7 +112,7 @@ public class GrupoActivity extends AppBaseActivity implements BuscaInformacaoDel
 			return false;
 		}else if(item.getItemId() == R.id.menu_novo) {
 			setItemSelecionado(null);
-//			alteraEstadoEExecuta(EstadoListaComprasActivity.CADASTRAR_LISTA);
+			alteraEstadoEExecuta(EstadoGrupoActivity.CADASTRAR);
 			return false;
 		} else if(item.getItemId() == R.id.menu_perfil){
 			onBackPressed();
@@ -174,6 +169,10 @@ public class GrupoActivity extends AppBaseActivity implements BuscaInformacaoDel
 		MenuItem item = menu.findItem(R.id.menu_meus_grupos);
 		item.setVisible(false);
 		return super.onPrepareOptionsMenu(menu);
+	}
+
+	public void persiste(Grupo grupo) {
+		getListaGrupo().add(grupo);
 	}
 	
 }

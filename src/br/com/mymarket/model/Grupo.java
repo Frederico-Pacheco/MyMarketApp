@@ -11,10 +11,15 @@ public class Grupo implements Serializable {
 
 	
 	private String nome;
+
+	public Grupo() {
+		super();
+	}
 	
 	public Grupo(String nome) {
 		this.nome=nome;
 	}
+
 
 	public String getNome() {
 		return nome;

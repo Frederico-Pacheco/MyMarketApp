@@ -49,6 +49,9 @@
     <string name="form_list_compras_nome">Nome da Lista de Compras</string>
     <!-- FORM PRODUTOS -->
     <string name="form_produtos_nome">Nome do Produto</string>
+    <!-- FORM GRUPO -->
+    <string name="form_grupo_nome">Nome do Grupo</string>
+    
     
     <!-- TELAS -->
     <string name="tela_lista_compras">Lista de Compras</string>
