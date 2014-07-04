@@ -47,7 +47,7 @@ public class ProdutosActivity extends AppBaseActivity implements BuscaInformacao
         registerBaseActivityReceiver();
         this.listaCompra = (ListaCompra) getIntent().getSerializableExtra(Extras.EXTRA_LISTA_COMPRA);
         this.estado = EstadoProdutosActivity.INICIO;
-        this.evento = new ProdutoReceiver().registraObservador(this);
+        this.event = new ProdutoReceiver().registraObservador(this);
 	}
 	
 	@Override
@@ -99,7 +99,7 @@ public class ProdutosActivity extends AppBaseActivity implements BuscaInformacao
 	}
 	
 	public void buscarProdutos() {
-        this.buscarProdutosTask = new BuscarProdutosTask(getMyMarketApplication(),this.listaCompra,this.evento);
+        this.buscarProdutosTask = new BuscarProdutosTask(getMyMarketApplication(),this.listaCompra,this.event);
         this.buscarProdutosTask.execute();
 	}
 
@@ -110,9 +110,8 @@ public class ProdutosActivity extends AppBaseActivity implements BuscaInformacao
 
     public void processaResultado(Object obj){
     	List<Produto> listas = (List<Produto>) obj;
-    	atualizaListaCom(listas);  
-        this.estado = EstadoProdutosActivity.LISTAGEM;
-        this.estado.executa(this);
+    	atualizaListaCom(listas);
+    	alteraEstadoEExecuta(EstadoProdutosActivity.LISTAGEM);
     }
     
 	private void atualizaListaCom(List<Produto> listas) {

@@ -52,9 +52,11 @@
     
     <!-- TELAS -->
     <string name="tela_lista_compras">Lista de Compras</string>
+    <string name="tela_grupos">Grupos</string>
     
     <!-- POPUP VALOR COMPRA -->
     <string name="popup_valor_compra">Insira o valor da compra.</string>
+    <string name="admob_id">admob</string>
     
 </resources>
 

@@ -38,8 +38,8 @@ public class ListaComprasActivity extends AppBaseActivity implements BuscaInform
         setContentView(R.layout.activity_main);
         registerBaseActivityReceiver();
         this.estado = EstadoListaComprasActivity.INICIO;
-        this.evento = new ListaCompraReceiver();
-        this.evento.registraObservador(this);
+        this.event = new ListaCompraReceiver();
+        this.event.registraObservador(this);
         getActionBar().setTitle(R.string.tela_lista_compras);
     }
 
@@ -70,7 +70,7 @@ public class ListaComprasActivity extends AppBaseActivity implements BuscaInform
     }
 
 	public void buscarListasDeCompras() {
-        this.buscarMaisListaCompraTask = new BuscarMaisListaCompraTask(getMyMarketApplication(),this.evento);
+        this.buscarMaisListaCompraTask = new BuscarMaisListaCompraTask(getMyMarketApplication(),this.event);
         this.buscarMaisListaCompraTask.execute();
 	}
 
@@ -86,8 +86,7 @@ public class ListaComprasActivity extends AppBaseActivity implements BuscaInform
     public void processaResultado(Object obj){
     	List<ListaCompra> listas = (List<ListaCompra>) obj;
     	atualizaListaCom(listas);
-        this.estado = EstadoListaComprasActivity.LISTAS_RECEBIDAS;
-        this.estado.executa(this);	
+    	alteraEstadoEExecuta(EstadoListaComprasActivity.LISTAS_RECEBIDAS);
     }
     
 
@@ -181,6 +180,7 @@ public class ListaComprasActivity extends AppBaseActivity implements BuscaInform
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		MenuItem item = menu.findItem(R.id.menu_lista_compras);

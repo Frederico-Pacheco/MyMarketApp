@@ -14,12 +14,16 @@ import br.com.mymarket.R;
 import br.com.mymarket.delegates.ReceiverDelegate;
 import br.com.mymarket.infra.MyLog;
 
+//import com.google.android.gms.ads.AdRequest;
+//import com.google.android.gms.ads.AdRequest.Builder;
+//import com.google.android.gms.ads.AdView;
+
 public abstract class AppBaseActivity extends Activity {
 	
 	public static final String FINISH_ALL_ACTIVITIES_ACTIVITY_ACTION = "br.com.mymarket.activities.FINISH_ALL_ACTIVITIES_ACTIVITY_ACTION";
 	private BaseActivityReceiver baseActivityReceiver = new BaseActivityReceiver();
 	public static final IntentFilter INTENT_FILTER = createIntentFilter();
-	protected ReceiverDelegate evento;
+	protected ReceiverDelegate event;
 
 	private static IntentFilter createIntentFilter() {
 		IntentFilter filter = new IntentFilter();
@@ -27,14 +31,11 @@ public abstract class AppBaseActivity extends Activity {
 		return filter;
 	}
 	
-	
-	
-	protected void set(){
-		AdRequest request = new AdRequest.Builder();
-		request.addTestDevice(AdRequest.DEVICE_ID_EMULATOR);
-        request.build();
-		AdView adView = (AdView) findViewById(R.id.ad);
-		adView.loadAd(request);
+	protected void adRequest(){
+//		Builder request = new AdRequest.Builder(); 
+//		request.addTestDevice(AdRequest.DEVICE_ID_EMULATOR);
+//		AdView adView = (AdView) findViewById(R.id.adviews);
+//		adView.loadAd(request.build());
 	}
 	
 
@@ -51,7 +52,7 @@ public abstract class AppBaseActivity extends Activity {
     public void onDestroy(){
         super.onDestroy();
         MyLog.i("DESTRUIU O PICO");
-        this.evento.desregistra(getMyMarketApplication());
+        this.event.desregistra(getMyMarketApplication());
         unRegisterBaseActivityReceiver();
     }
 

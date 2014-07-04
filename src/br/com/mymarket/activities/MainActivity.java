@@ -50,7 +50,8 @@ public class MainActivity extends AppBaseActivity implements
 		} else {
 			this.estado = EstadoMainActivity.OAUTH;
 		}
-		this.evento = new PerfilReceiver().registraObservador(this);
+		this.event = new PerfilReceiver().registraObservador(this);
+		adRequest();
 	}
 
 	@Override
@@ -169,8 +170,7 @@ public class MainActivity extends AppBaseActivity implements
 	public void processaResultado(Object obj) {
 		Pessoa pessoa = (Pessoa) obj;
 		atualizaPerfil(pessoa);
-		this.estado = EstadoMainActivity.PERFIL;
-		this.estado.executa(this);	
+		alteraEstadoEExecuta(EstadoMainActivity.PERFIL);
 	}
 	
 	private void atualizaPerfil(Pessoa pessoa) {
@@ -182,7 +182,7 @@ public class MainActivity extends AppBaseActivity implements
 	}
 
 	public void buscarMeuPerfil() {
-		this.buscarMeuPerfilTask = new BuscarMeuPerfilTask(getMyMarketApplication(), this.myPhoneNumber,this.evento);
+		this.buscarMeuPerfilTask = new BuscarMeuPerfilTask(getMyMarketApplication(), this.myPhoneNumber,this.event);
 		this.buscarMeuPerfilTask.execute();
 	}
 

@@ -3,7 +3,7 @@ package br.com.mymarket.navegacao;
 import br.com.mymarket.R;
 import br.com.mymarket.activities.GrupoActivity;
 import br.com.mymarket.fragments.FormularioListaDeComprasFragment;
-import br.com.mymarket.fragments.ListaCompraFragment;
+import br.com.mymarket.fragments.GrupoFragment;
 import br.com.mymarket.fragments.ProgressFragment;
 import br.com.mymarket.utils.FragmentUtils;
 
@@ -19,7 +19,7 @@ public enum EstadoGrupoActivity {
 	        }
 	    },LISTAS_RECEBIDAS{
 	    	public void executa(GrupoActivity activity){
-	    		FragmentUtils.colocaOuBuscaFragmentNaTela(activity,R.id.fragment_principal,ListaCompraFragment.class,false);
+	    		FragmentUtils.colocaOuBuscaFragmentNaTela(activity,R.id.fragment_principal,GrupoFragment.class,false);
 	    	}
 	    },CADASTRAR_LISTA{
 	    	public void executa(GrupoActivity activity){
