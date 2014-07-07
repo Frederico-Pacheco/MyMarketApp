@@ -50,7 +50,7 @@ public class ListaComprasActivity extends AppBaseActivity implements BuscaInform
     
     @Override
     public void onSaveInstanceState(Bundle outState){
-        super.onSaveInstanceState(outState);
+//        super.onSaveInstanceState(outState);
         MyLog.i("SALVANDO ESTADO!!");
         outState.putSerializable(Constants.ESTADO_ATUAL,this.estado);
     }

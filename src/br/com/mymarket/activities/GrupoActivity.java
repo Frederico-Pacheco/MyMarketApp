@@ -41,7 +41,7 @@ public class GrupoActivity extends AppBaseActivity implements BuscaInformacaoDel
     
     @Override
     public void onSaveInstanceState(Bundle outState){
-        super.onSaveInstanceState(outState);
+//        super.onSaveInstanceState(outState);
         MyLog.i("SALVANDO ESTADO!!");
         outState.putSerializable(Constants.ESTADO_ATUAL,this.estado);
     }
