@@ -1,10 +1,14 @@
 package br.com.mymarket.helpers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import br.com.mymarket.R;
 import br.com.mymarket.model.Grupo;
+import br.com.mymarket.model.Pessoa;
 
 
 public class FormularioGrupoHelper {
@@ -35,6 +39,14 @@ public class FormularioGrupoHelper {
 	public Grupo recuperarGrupo(){
 		grupo.setNome(nome.getText().toString());
 		return grupo;
+	}
+
+	public List<Pessoa> getIntegrantes() {
+		List<Pessoa> integrantes = new ArrayList<>();
+		if(this.grupo != null && this.grupo.getIntegrantes() != null && !this.grupo.getIntegrantes().isEmpty()){
+			integrantes = this.grupo.getIntegrantes();
+		}
+		return integrantes;
 	}
 
 }

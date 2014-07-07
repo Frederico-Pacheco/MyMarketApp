@@ -19,6 +19,7 @@ import br.com.mymarket.activities.GrupoActivity;
 import br.com.mymarket.adapters.ContatosAdapter;
 import br.com.mymarket.adapters.FormGrupoContatoAdapter;
 import br.com.mymarket.helpers.FormularioGrupoHelper;
+import br.com.mymarket.infra.MyLog;
 import br.com.mymarket.model.Grupo;
 import br.com.mymarket.model.Pessoa;
 import br.com.mymarket.navegacao.EstadoGrupoActivity;
@@ -26,19 +27,26 @@ import br.com.mymarket.navegacao.EstadoGrupoActivity;
 public class FormularioGrupoFragment extends Fragment {
 	
 	private FormularioGrupoHelper formularioGrupoHelper;
+	private FormGrupoContatoAdapter formAdapter;
+	private ContatosAdapter contatosAdapter;
+	private List<Pessoa> contatos;
+	private GrupoActivity activity;
 	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    	View view = inflater.inflate(R.layout.fragment_form_grupo, container, false);
-    	final GrupoActivity activity = ((GrupoActivity)this.getActivity());
-    	List<Pessoa> contatos = activity.getMyMarketApplication().getContato();
+    	MyLog.i("FORM GRUPO CRIADO");
     	
-    	final FormGrupoContatoAdapter formAdapter = new FormGrupoContatoAdapter(activity, new ArrayList<Pessoa>());
-    	final ContatosAdapter contatosAdapter = new ContatosAdapter(activity,R.layout.listview_contatos, contatos);
+    	View view = inflater.inflate(R.layout.fragment_form_grupo, container, false);
+    	activity = ((GrupoActivity)this.getActivity());
+    	contatos = activity.getMyMarketApplication().getContato();
     	
     	formularioGrupoHelper = new FormularioGrupoHelper(view);
     	formularioGrupoHelper.colocarGrupoNoFormulario(activity.getItemSelecionado());
     	Button button = (Button)view.findViewById(R.id.btn_form);
+    	
+    	formAdapter = new FormGrupoContatoAdapter(activity, formularioGrupoHelper.getIntegrantes());
+    	contatosAdapter = new ContatosAdapter(activity,R.layout.listview_contatos, contatos);
+    	
     	
     	ListView listContatoAdd = (ListView)view.findViewById(R.id.contatos_grupo);
     	listContatoAdd.setAdapter(formAdapter);
@@ -55,12 +63,13 @@ public class FormularioGrupoFragment extends Fragment {
 			}
 		});
     	
+    	
     	listContatoAdd.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> adapter, View view, int posicao,long id) {
 				Pessoa pessoaRemove = (Pessoa)adapter.getItemAtPosition(posicao);
 				formAdapter.remove(pessoaRemove);
-				contatosAdapter.add(pessoaRemove,posicao);
+				contatosAdapter.add(pessoaRemove);
 			}
 		});
     	
@@ -68,6 +77,7 @@ public class FormularioGrupoFragment extends Fragment {
 			@Override
 			public void onClick(View view) {
 				Grupo grupo = formularioGrupoHelper.recuperarGrupo();
+				grupo.setIntegrantes(formAdapter.getLista());
 				//TODO PERSIST OR POST OR PUT.
 				activity.persiste(grupo);
 				activity.alteraEstadoEExecuta(EstadoGrupoActivity.LISTAS_RECEBIDAS);
@@ -75,9 +85,5 @@ public class FormularioGrupoFragment extends Fragment {
 		});
         return view;
     }
-    
-	public void performSearch() {
-		// TODO Auto-generated method stub
-		
-	}
+
 }

@@ -18,6 +18,7 @@ public class RecuperarContatosTask extends AsyncTask<Pagina, Void, List<Pessoa>>
 		this.application = application;
 		this.application.registra(this);
 	}
+	
 
 	@Override
 	protected List<Pessoa> doInBackground(Pagina... paginas) {

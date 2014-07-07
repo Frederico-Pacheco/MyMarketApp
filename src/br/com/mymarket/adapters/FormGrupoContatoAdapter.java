@@ -1,5 +1,6 @@
 package br.com.mymarket.adapters;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -16,7 +17,7 @@ import br.com.mymarket.model.Pessoa;
 
 public class FormGrupoContatoAdapter extends BaseAdapter {
 	private Context context;
-    private final List<Pessoa> listas;
+    private List<Pessoa> listas = new ArrayList<Pessoa>();
     
     public FormGrupoContatoAdapter(Context mContext, List<Pessoa> listas) {
         this.context = mContext;
@@ -88,4 +89,15 @@ public class FormGrupoContatoAdapter extends BaseAdapter {
             this.imageView = (ImageView) view.findViewById(R.id.image);
         }
     }
+
+
+	public List<Pessoa> getLista() {
+		return listas;
+	}
+
+	public void setLista(List<Pessoa> lista) {
+		this.listas.clear();
+		this.listas.addAll(lista);
+		notifyDataSetChanged();
+	}
 }

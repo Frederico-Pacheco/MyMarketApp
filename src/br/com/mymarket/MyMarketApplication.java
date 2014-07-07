@@ -41,10 +41,10 @@ public class MyMarketApplication extends Application {
 		super.onCreate();
 		preferences = getSharedPreferences("configs", Activity.MODE_PRIVATE);
 		initializeGCM();
-		getContacts();
+		buscarContatos();
 	}
 	
-	private void getContacts() {
+	public void buscarContatos() {
 		new RecuperarContatosTask(this).execute();
 	}
 

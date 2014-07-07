@@ -130,7 +130,6 @@ public class GrupoActivity extends AppBaseActivity implements BuscaInformacaoDel
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
 
 	public void processaResultado(Object obj) {
 		List<Grupo> listaGrupo = (List<Grupo>) obj; 
@@ -145,6 +144,7 @@ public class GrupoActivity extends AppBaseActivity implements BuscaInformacaoDel
 
 	public void buscarListaGrupo() {
 		new BuscarGrupoTask(getMyMarketApplication(), this.event).execute();
+		this.getMyMarketApplication().buscarContatos();		
 	}
 
 	public void alteraEstadoEExecuta(EstadoGrupoActivity estado) {

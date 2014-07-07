@@ -73,15 +73,14 @@ public class ContatosAdapter extends ArrayAdapter<Pessoa> {
         }
     }
 
-
 	public void remove(Pessoa pessoa) {
 		listas.remove(pessoa);
 		notifyDataSetChanged();
 	}
 
-	public void add(Pessoa pessoa, int posicao) {
-		listas.add(posicao, pessoa);
+	public void add(Pessoa pessoa) {
+		listas.add(pessoa);	
 		notifyDataSetChanged();
 	}
-    
+
 }
