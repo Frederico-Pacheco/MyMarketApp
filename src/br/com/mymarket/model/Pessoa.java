@@ -15,6 +15,15 @@ public class Pessoa implements Serializable {
 	
 	private String number;
 
+	public Pessoa() {
+		super();
+	}	
+	
+	public Pessoa(String nome, String number) {
+		this.nome = nome;
+		this.number = number;
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -37,5 +46,10 @@ public class Pessoa implements Serializable {
 
 	public void setNumber(String number) {
 		this.number = number;
+	}
+
+	@Override
+	public String toString() {
+		return  nome + " - " + number;
 	}
 }

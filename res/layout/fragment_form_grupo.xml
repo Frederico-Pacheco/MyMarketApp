@@ -19,13 +19,6 @@
             android:layout_height="wrap_content"
             android:hint="@string/form_grupo_nome" />
         
-<!--         <EditText -->
-<!--             android:id="@+id/search_contatos2" -->
-<!--             android:layout_width="match_parent" -->
-<!--             android:layout_height="wrap_content" -->
-<!--             android:imeOptions="actionSearch" -->
-<!--             android:hint="@string/buscar_contatos" /> -->
-
 		<AutoCompleteTextView  
 		    android:id="@+id/search_contatos"
 		    android:layout_width="match_parent"
@@ -33,7 +26,13 @@
 		    android:layout_height="wrap_content"
 		    android:hint="@string/buscar_contatos"
 		     />
-
+		
+		<ListView
+	      android:id="@+id/contatos_grupo"
+	      android:orientation="vertical"
+	      android:layout_width="match_parent"
+	      android:layout_height="fill_parent" />
+		
         <Button
             android:id="@+id/btn_form"
             android:layout_width="match_parent"
