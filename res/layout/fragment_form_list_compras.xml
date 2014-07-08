@@ -24,11 +24,21 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/btn_form_lista_compras"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/comum_confirmar" />
+       <Button
+       	   android:id="@+id/btn_form_lista_compras"
+		   android:text="@string/comum_confirmar"       	   
+           style="@style/ShadowText"
+       	   android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="15dp"
+           android:background="@drawable/button_background_states"
+           android:gravity="center"
+           android:onClick="acessarApk"
+           android:padding="10dp"
+           android:textColor="@color/text"
+           android:textSize="20sp"
+           android:textStyle="bold" />
+          	    
     </LinearLayout>
 
 </ScrollView>

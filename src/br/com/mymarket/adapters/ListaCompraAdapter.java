@@ -57,8 +57,6 @@ public class ListaCompraAdapter extends BaseAdapter {
         viewHolder.nome.setText(listaCompra.getNome());
         viewHolder.data.setText(DateUtils.formatDate(listaCompra.getData()));
         
-//		mudarCor(position,convertView);
-        
         return convertView;
     }
 
@@ -67,12 +65,6 @@ public class ListaCompraAdapter extends BaseAdapter {
         return 2;
     }
 
-	private void mudarCor(int posicao, View view) {
-		if(posicao % 2 == 0 ){
-			view.setBackgroundColor(context.getResources().getColor(R.color.linha_par));
-		}
-	}
-	
     class ViewHolder {
         TextView nome;
         TextView data;
