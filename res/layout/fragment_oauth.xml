@@ -14,8 +14,8 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center|bottom"
-        android:orientation="vertical" 
-        android:paddingBottom="50dp">
+        android:orientation="vertical"
+        android:paddingBottom="50dp" >
 
         <EditText
             android:id="@+id/oat_cellphone"
