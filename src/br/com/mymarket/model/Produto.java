@@ -1,32 +1,41 @@
 package br.com.mymarket.model;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
-public class Produto implements Serializable{
+import br.com.mymarket.enuns.StatusProduto;
 
+public class Produto implements Serializable {
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -2491497910276359249L;
+	private static final long serialVersionUID = -2914286244585036243L;
 
+	private long id;
+	
 	private String nome;
 	
-	private Double qtde;
+	private StatusProduto statusProduto;
 	
-	private Double preco;
+	private Calendar dataCriacao;
 	
-	private boolean comprado;
-	
-	public Produto(){
-		super();
-	}
-	
-	public Produto(String nome, Double qtde, Double preco, boolean comprado) {
-		super();
+	private Calendar dataAlteracao;
+
+	public Produto(String nome, StatusProduto statusProduto) {
 		this.nome = nome;
-		this.qtde = qtde;
-		this.preco = preco;
-		this.comprado = comprado;
+		this.statusProduto = statusProduto;
+	}
+
+	public Produto() {
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getNome() {
@@ -37,28 +46,32 @@ public class Produto implements Serializable{
 		this.nome = nome;
 	}
 
-	public Double getQtde() {
-		return qtde;
+	public StatusProduto getStatusProduto() {
+		return statusProduto;
 	}
 
-	public void setQtde(Double qtde) {
-		this.qtde = qtde;
+	public void setStatusProduto(StatusProduto statusProduto) {
+		this.statusProduto = statusProduto;
 	}
 
-	public Double getPreco() {
-		return preco;
+	public Calendar getDataCriacao() {
+		return dataCriacao;
 	}
 
-	public void setPreco(Double preco) {
-		this.preco = preco;
+	public void setDataCriacao(Calendar dataCriacao) {
+		this.dataCriacao = dataCriacao;
+	}
+
+	public Calendar getDataAlteracao() {
+		return dataAlteracao;
+	}
+
+	public void setDataAlteracao(Calendar dataAlteracao) {
+		this.dataAlteracao = dataAlteracao;
 	}
 
 	public boolean isComprado() {
-		return comprado;
-	}
-
-	public void setComprado(boolean comprado) {
-		this.comprado = comprado;
+		return StatusProduto.COMPRADO.equals(this.getStatusProduto());
 	}
 	
 }

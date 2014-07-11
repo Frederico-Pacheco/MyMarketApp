@@ -30,7 +30,7 @@ public class LembretesBroadcast extends BroadcastReceiver {
 	            
 	            Notification notification = new Notification.Builder(context.getApplicationContext())
                 .setContentTitle("LEMBRETE")
-                .setContentText(lembrete.getNome())
+                .setContentText(lembrete.getMensagem())
                 .setSmallIcon(R.drawable.ic_launcher).build();
 		        NotificationManager manager = (NotificationManager) context.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
 		        manager.notify((int)lembrete.getDataCriacao().getTimeInMillis(), notification);

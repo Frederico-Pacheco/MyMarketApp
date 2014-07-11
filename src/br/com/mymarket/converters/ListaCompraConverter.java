@@ -1,6 +1,7 @@
 package br.com.mymarket.converters;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +21,8 @@ public class ListaCompraConverter {
 	                JSONObject listacompra = js.getJSONObject(i);
 	                
 	                Long id = listacompra.getLong("id");
-	                Date data = DateUtils.toDate((String)listacompra.getString("data"));
+	                Calendar data = Calendar.getInstance();
+	                data.setTime(DateUtils.toDate((String)listacompra.getString("data")));
 	                String nome = listacompra.getString("nome");
 	                
 	                listas.add(new ListaCompra(id, data, nome));

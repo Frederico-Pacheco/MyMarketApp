@@ -55,7 +55,7 @@ public class ListaCompraAdapter extends BaseAdapter {
         ListaCompra listaCompra = (ListaCompra) getItem(position);
 
         viewHolder.nome.setText(listaCompra.getNome());
-        viewHolder.data.setText(DateUtils.formatDate(listaCompra.getData()));
+        viewHolder.data.setText(DateUtils.formatDate(listaCompra.getDataCriacao().getTime()));
         
         return convertView;
     }

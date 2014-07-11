@@ -11,8 +11,8 @@ public class MyServer {
         this.uri = application.getResources().getString(R.string.server_uri);
     }
 
-    public String uriFor(String value) {
-        return String.format(this.uri, value);
+    public String uriFor(String relativeUrl) {
+    	return this.uri + relativeUrl;
     }
 
 }

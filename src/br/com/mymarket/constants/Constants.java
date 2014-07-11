@@ -9,6 +9,8 @@ public class Constants {
 	
     public static final String SUCESSO = "sucesso";	
 
+    public static final String TOKEN = "tokenDevice";
+    
 	/***
 	 * GCM GOOGLE
 	 */

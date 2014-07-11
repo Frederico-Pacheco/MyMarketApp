@@ -2,33 +2,24 @@ package br.com.mymarket.model;
 
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.List;
 
-public class Lembrete implements Serializable {
-	
+public class Compra implements Serializable {
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6613141933822395382L;
+	private static final long serialVersionUID = 5149535001513535922L;
 
 	private long id;
 	
-	private String titulo;
-	
-	private String mensagem;
-	
 	private Pessoa pessoa;
 	
+	private List<ItemCompra> itens;
+
 	private Calendar dataCriacao;
 	
 	private Calendar dataAlteracao;
-
-	public Lembrete(String mensagem, Date dataCriacao) {
-		this.mensagem = mensagem;
-		Calendar data = Calendar.getInstance();
-		data.setTime(dataCriacao);
-		this.dataCriacao = data;
-	}
 
 	public long getId() {
 		return id;
@@ -38,28 +29,20 @@ public class Lembrete implements Serializable {
 		this.id = id;
 	}
 
-	public String getTitulo() {
-		return titulo;
-	}
-
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
-
-	public String getMensagem() {
-		return mensagem;
-	}
-
-	public void setMensagem(String mensagem) {
-		this.mensagem = mensagem;
-	}
-
 	public Pessoa getPessoa() {
 		return pessoa;
 	}
 
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
+	}
+
+	public List<ItemCompra> getItens() {
+		return itens;
+	}
+
+	public void setItens(List<ItemCompra> itens) {
+		this.itens = itens;
 	}
 
 	public Calendar getDataCriacao() {

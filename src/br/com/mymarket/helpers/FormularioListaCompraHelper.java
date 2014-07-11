@@ -1,15 +1,11 @@
 package br.com.mymarket.helpers;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import br.com.mymarket.R;
 import br.com.mymarket.model.ListaCompra;
-import br.com.mymarket.utils.DateUtils;
 
 
 public class FormularioListaCompraHelper {
@@ -32,7 +28,6 @@ public class FormularioListaCompraHelper {
 		if(listaCompra != null)
 		{
 			nome.setText(listaCompra.getNome());
-			data.init(listaCompra.getData().getYear(), listaCompra.getData().getMonth(), listaCompra.getData().getDay(), null);
 			botao.setText("Alterar");
 			this.listaCompra = listaCompra;
 		}else{
@@ -42,12 +37,6 @@ public class FormularioListaCompraHelper {
 	
 	public ListaCompra recuperarListaCompra(){
 		listaCompra.setNome(nome.getText().toString());
-		Date date = Calendar.getInstance().getTime();
-		date.setDate(data.getDayOfMonth());
-		date.setMonth(data.getMonth());
-		date.setYear(data.getYear());
-		DateUtils.zerarData(date);
-		listaCompra.setData(date);
 		return listaCompra;
 	}
 

@@ -53,7 +53,7 @@ public class ContatosAdapter extends ArrayAdapter<Pessoa> {
         }
         Pessoa pessoa = (Pessoa) getItem(position);
         viewHolder.nome.setText(pessoa.getNome());
-        viewHolder.telefone.setText(pessoa.getNumber());
+        viewHolder.telefone.setText(pessoa.getCelular());
         return convertView;
     }
     

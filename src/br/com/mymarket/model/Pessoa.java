@@ -1,27 +1,67 @@
 package br.com.mymarket.model;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
-public class Pessoa implements Serializable {
+public class Pessoa implements Serializable{
 	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -8534579135061476596L;
+	private static final long serialVersionUID = 467678398697569121L;
 
+	private long id;
+	
+	private String celular;
+	
+	private String senha;
+	
+	private String email;
+	
 	private String nome;
 	
-	private String urlImage;
+	private Calendar dataCriacao;
 	
-	private String number;
+	private Calendar dataAlteracao;	
+
+	public Pessoa(String nome, String celular) {
+		this.nome = nome; 
+		this.celular = celular;
+	}
 
 	public Pessoa() {
-		super();
-	}	
-	
-	public Pessoa(String nome, String number) {
-		this.nome = nome;
-		this.number = number;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getCelular() {
+		return celular;
+	}
+
+	public void setCelular(String celular) {
+		this.celular = celular;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getNome() {
@@ -32,24 +72,20 @@ public class Pessoa implements Serializable {
 		this.nome = nome;
 	}
 
-	public String getUrlImage() {
-		return urlImage;
+	public Calendar getDataCriacao() {
+		return dataCriacao;
 	}
 
-	public void setUrlImage(String urlImage) {
-		this.urlImage = urlImage;
+	public void setDataCriacao(Calendar dataCriacao) {
+		this.dataCriacao = dataCriacao;
 	}
 
-	public String getNumber() {
-		return number;
+	public Calendar getDataAlteracao() {
+		return dataAlteracao;
 	}
 
-	public void setNumber(String number) {
-		this.number = number;
+	public void setDataAlteracao(Calendar dataAlteracao) {
+		this.dataAlteracao = dataAlteracao;
 	}
-
-	@Override
-	public String toString() {
-		return  nome + " - " + number;
-	}
+	
 }

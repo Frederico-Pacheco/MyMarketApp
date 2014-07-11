@@ -77,8 +77,7 @@ public class MyMarketApplication extends Application {
 	}
 	
 	public void criarLembrete(Lembrete lembrete) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(lembrete.getData());
+		Calendar calendar = lembrete.getDataCriacao();
 	    AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 	    Intent intent = new Intent(Constants.LEMBRETE_ACTION);
 	    intent.putExtra(Extras.EXTRA_LEMBRETE, lembrete);
@@ -94,6 +93,23 @@ public class MyMarketApplication extends Application {
 	public void adicionaContatos(List<Pessoa> retorno) {
 		this.contato.clear();
 		this.contato.addAll(retorno);
+	}
+
+	public String getToken() {
+		return preferences.getString(Constants.TOKEN, null);
+	}
+
+	public void setToken(String token) {
+		MyLog.i("SETANDO VALOR TOKEN = " + token);
+		if (token != null) {
+			SharedPreferences.Editor editor = preferences.edit();
+			editor.putString(Constants.TOKEN, token);
+			editor.commit();
+		}
+	}
+
+	public boolean isAuthenticated() {
+		return getToken() != null;
 	}
 	
 }

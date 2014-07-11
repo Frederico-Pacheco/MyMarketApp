@@ -40,7 +40,7 @@
     <string name="cxmenu_informacao">Ver Informações</string>
     <string name="cx_menu_enviar_compra">Enviar Compra</string>
     
-    <string name="server_uri">https://blablabla.heroku.com</string>
+    <string name="server_uri">http://mymarketapi.herokuapp.com/api/</string>
     
     <string name="status_offline">Offline</string>
     <string name="status_online">Online</string>

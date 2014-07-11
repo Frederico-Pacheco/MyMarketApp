@@ -3,6 +3,7 @@ package br.com.mymarket.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.PhoneNumberUtils;
 import android.telephony.TelephonyManager;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -13,26 +14,27 @@ import android.widget.Toast;
 import br.com.mymarket.R;
 import br.com.mymarket.constants.Constants;
 import br.com.mymarket.delegates.BuscaInformacaoDelegate;
-import br.com.mymarket.helpers.OauthHelper;
+import br.com.mymarket.delegates.ReceiverDelegate;
 import br.com.mymarket.infra.CheckConnectivity;
 import br.com.mymarket.infra.MyLog;
 import br.com.mymarket.model.Pessoa;
 import br.com.mymarket.navegacao.EstadoMainActivity;
+import br.com.mymarket.receivers.OauthReceiver;
 import br.com.mymarket.receivers.PerfilReceiver;
 import br.com.mymarket.tasks.BuscarMeuPerfilTask;
+import br.com.mymarket.tasks.OauthTask;
 
 public class MainActivity extends AppBaseActivity implements
 		BuscaInformacaoDelegate {
 
 	private Pessoa perfil;
-
 	private EstadoMainActivity estado;
-	private OauthHelper oauthHelper;
 	private Menu mainMenu;
 	private BuscarMeuPerfilTask buscarMeuPerfilTask;
 	private String myPhoneNumber;
 	private int defaultWindowSystem;
-
+	private ReceiverDelegate eventOauth;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		this.defaultWindowSystem = getWindow().getDecorView()
@@ -43,14 +45,14 @@ public class MainActivity extends AppBaseActivity implements
 		registerBaseActivityReceiver();
 		TelephonyManager tMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 		this.myPhoneNumber = tMgr.getLine1Number();
-		oauthHelper = new OauthHelper(this);
-		if (oauthHelper.verifyPhoneNumber(this.myPhoneNumber)) {
+		if (getMyMarketApplication().isAuthenticated()) {
 			showNormalUI();
 			this.estado = EstadoMainActivity.INICIO;
 		} else {
 			this.estado = EstadoMainActivity.OAUTH;
 		}
 		this.event = new PerfilReceiver().registraObservador(this);
+		this.eventOauth = new OauthReceiver().registraObservador(this);
 		adRequest();
 	}
 
@@ -144,7 +146,7 @@ public class MainActivity extends AppBaseActivity implements
 
 	@Override
 	public void onBackPressed() {
-		if (new OauthHelper(this).verifyPhoneNumber(this.myPhoneNumber)) {
+		if (getMyMarketApplication().isAuthenticated()) {
 			finish();
 		}
 		super.onBackPressed();
@@ -155,22 +157,26 @@ public class MainActivity extends AppBaseActivity implements
 		if (CheckConnectivity.isOffLine(this)) {
 			Toast.makeText(this, R.string.internet_fora, Toast.LENGTH_LONG)
 					.show();
-		} else if (!oauthHelper.acessarAplicativo(cellPhone.getText()
-				.toString())) {
-			Toast.makeText(this, R.string.numero_invalido, Toast.LENGTH_LONG)
-					.show();
+		} else if(!PhoneNumberUtils.isWellFormedSmsAddress(cellPhone.getText().toString())) {
+			Toast.makeText(this, R.string.numero_invalido, Toast.LENGTH_LONG).show();
 		} else {
-			showNormalUI();
-			alteraEstadoEExecuta(EstadoMainActivity.INICIO);
-			this.onPrepareOptionsMenu(this.mainMenu);
+			new OauthTask(this.getMyMarketApplication(), this.eventOauth).execute(cellPhone.getText().toString());
+			alteraEstadoEExecuta(EstadoMainActivity.AGUARDANDO_PERFIL);
 		}
 	}
 
 	@Override
 	public void processaResultado(Object obj) {
-		Pessoa pessoa = (Pessoa) obj;
-		atualizaPerfil(pessoa);
-		alteraEstadoEExecuta(EstadoMainActivity.PERFIL);
+		if(obj instanceof Pessoa){
+			Pessoa pessoa = (Pessoa) obj;
+			atualizaPerfil(pessoa);
+			alteraEstadoEExecuta(EstadoMainActivity.PERFIL);
+		}else if(obj instanceof String){
+			getMyMarketApplication().setToken((String)obj);
+			showNormalUI();
+			alteraEstadoEExecuta(EstadoMainActivity.INICIO);
+			this.onPrepareOptionsMenu(this.mainMenu);
+		}
 	}
 	
 	private void atualizaPerfil(Pessoa pessoa) {
