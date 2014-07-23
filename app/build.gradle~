@@ -1,0 +1,72 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.8.+'
+    }
+}
+
+tasks.withType(JavaCompile) { 
+    sourceCompatibility = "1.7"
+    targetCompatibility = "1.7" 
+}
+
+task copyDependencies(type: Copy) {
+	description = 'Copy depencies to libs. Useful for Eclipse'
+    libDir = new File(project.projectDir, '/libs')
+    println libDir
+    println 'Adding dependencies from compile configuration'
+    for(file in configurations.debugCompile) 
+    {
+        println 'Added ' + file
+        copy 
+        {
+            from file
+            into libDir
+        }
+    }
+}
+
+apply plugin: 'android'
+apply plugin: 'eclipse'
+
+android {
+    buildToolsVersion "20"
+    compileSdkVersion 19
+
+	defaultConfig {
+		minSdkVersion 18
+		targetSdkVersion 19
+	}
+	
+	sourceSets {
+		main {
+			manifest {
+				srcFile 'AndroidManifest.xml'
+			}
+			java {
+				srcDir 'src'
+			}
+			res {
+				srcDir 'res'
+			}
+			assets {
+				srcDir 'assets'
+			}
+			resources {
+				srcDir 'src'
+			}
+			aidl {
+				srcDir 'src'
+			}
+		}
+	}
+}
+
+dependencies {
+    compile 'com.android.support:appcompat-v7:19.1.0'
+    compile 'com.android.support:support-v4:19.1.0'
+	compile fileTree(dir: 'libs', include: ['*.jar'])
+}

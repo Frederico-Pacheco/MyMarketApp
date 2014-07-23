@@ -1,0 +1,56 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.8.+'
+    }
+}
+
+tasks.withType(JavaCompile) { 
+    sourceCompatibility = "1.7"
+    targetCompatibility = "1.7" 
+}
+
+apply plugin: 'android'
+apply plugin: 'eclipse'
+
+android {
+    buildToolsVersion "20"
+    compileSdkVersion 19
+
+	defaultConfig {
+		minSdkVersion 18
+		targetSdkVersion 19
+	}
+	
+	sourceSets {
+		main {
+			manifest {
+				srcFile 'AndroidManifest.xml'
+			}
+			java {
+				srcDir 'src'
+			}
+			res {
+				srcDir 'res'
+			}
+			assets {
+				srcDir 'assets'
+			}
+			resources {
+				srcDir 'src'
+			}
+			aidl {
+				srcDir 'src'
+			}
+		}
+	}
+}
+
+dependencies {
+    compile 'com.android.support:appcompat-v7:19.1.0'
+    compile 'com.android.support:support-v4:19.1.0'
+	compile fileTree(dir: 'libs', include: ['*.jar'])
+}
