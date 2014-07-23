@@ -18,6 +18,7 @@ public class DateUtils {
 		return new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(data);
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static void zerarData(Date date){
 		date.setHours(0);
 		date.setMinutes(0);
