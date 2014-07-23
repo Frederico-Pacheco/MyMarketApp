@@ -14,6 +14,7 @@ import br.com.mymarket.infra.MyServer;
 
 
 public class WebClient {
+	
     private final String url;
 
     public WebClient(String relativeUrl,Application application) {
@@ -45,6 +46,7 @@ public class WebClient {
         try {
             DefaultHttpClient httpClient = new DefaultHttpClient();
             HttpPost post = new HttpPost(url);
+            MyLog.i("EFETUANDO O POST PARA URL: " + this.url + " BODY: " + json);
             if (json != null) {
                 post.setEntity(new StringEntity(json));
                 post.setHeader("Content-type", "application/json");

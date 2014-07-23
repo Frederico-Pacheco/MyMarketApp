@@ -11,11 +11,11 @@ public class DateUtils {
 	}
 	
 	public static String formatHour(Date date){
-		return new SimpleDateFormat("hh:mm:ss").format(date);
+		return new SimpleDateFormat("HH:mm:ss").format(date);
 	}
 	
 	public static Date toDate(String data) throws ParseException{
-		return new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").parse(data);
+		return new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(data);
 	}
 	
 	public static void zerarData(Date date){

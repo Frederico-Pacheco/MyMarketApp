@@ -3,6 +3,7 @@ package br.com.mymarket.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.PhoneNumberUtils;
 import android.telephony.TelephonyManager;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -13,27 +14,27 @@ import android.widget.Toast;
 import br.com.mymarket.R;
 import br.com.mymarket.constants.Constants;
 import br.com.mymarket.delegates.BuscaInformacaoDelegate;
-import br.com.mymarket.evento.EventoPerfilRecebido;
-import br.com.mymarket.helpers.OauthHelper;
+import br.com.mymarket.delegates.ReceiverDelegate;
 import br.com.mymarket.infra.CheckConnectivity;
 import br.com.mymarket.infra.MyLog;
 import br.com.mymarket.model.Pessoa;
 import br.com.mymarket.navegacao.EstadoMainActivity;
+import br.com.mymarket.receivers.OauthReceiver;
+import br.com.mymarket.receivers.PerfilReceiver;
 import br.com.mymarket.tasks.BuscarMeuPerfilTask;
+import br.com.mymarket.tasks.OauthTask;
 
 public class MainActivity extends AppBaseActivity implements
 		BuscaInformacaoDelegate {
 
 	private Pessoa perfil;
-
 	private EstadoMainActivity estado;
-	private OauthHelper oauthHelper;
 	private Menu mainMenu;
-	private EventoPerfilRecebido evento;
 	private BuscarMeuPerfilTask buscarMeuPerfilTask;
 	private String myPhoneNumber;
 	private int defaultWindowSystem;
-
+	private ReceiverDelegate eventOauth;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		this.defaultWindowSystem = getWindow().getDecorView()
@@ -44,19 +45,20 @@ public class MainActivity extends AppBaseActivity implements
 		registerBaseActivityReceiver();
 		TelephonyManager tMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 		this.myPhoneNumber = tMgr.getLine1Number();
-		oauthHelper = new OauthHelper(this);
-		if (oauthHelper.verifyPhoneNumber(this.myPhoneNumber)) {
+		if (getMyMarketApplication().isAuthenticated()) {
 			showNormalUI();
 			this.estado = EstadoMainActivity.INICIO;
 		} else {
 			this.estado = EstadoMainActivity.OAUTH;
 		}
-		this.evento = EventoPerfilRecebido.registraObservador(this);
+		this.event = new PerfilReceiver().registraObservador(this);
+		this.eventOauth = new OauthReceiver().registraObservador(this);
+		adRequest();
 	}
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
+//		super.onSaveInstanceState(outState);
 		MyLog.i("SALVANDO ESTADO!!");
 		outState.putSerializable(Constants.ESTADO_ATUAL, this.estado);
 	}
@@ -129,6 +131,7 @@ public class MainActivity extends AppBaseActivity implements
 			startActivity(new Intent(this, ListaComprasActivity.class));
 			return false;
 		} else if (item.getItemId() == R.id.menu_meus_grupos) {
+			startActivity(new Intent(this, GrupoActivity.class));
 			return false;
 		} else if (item.getItemId() == R.id.menu_configuracoes) {
 			return false;
@@ -143,17 +146,10 @@ public class MainActivity extends AppBaseActivity implements
 
 	@Override
 	public void onBackPressed() {
-		if (new OauthHelper(this).verifyPhoneNumber(this.myPhoneNumber)) {
+		if (getMyMarketApplication().isAuthenticated()) {
 			finish();
 		}
 		super.onBackPressed();
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		this.evento.desregistra(getMyMarketApplication());
-		unRegisterBaseActivityReceiver();
 	}
 
 	public void acessarApk(View view) {
@@ -161,29 +157,28 @@ public class MainActivity extends AppBaseActivity implements
 		if (CheckConnectivity.isOffLine(this)) {
 			Toast.makeText(this, R.string.internet_fora, Toast.LENGTH_LONG)
 					.show();
-		} else if (!oauthHelper.acessarAplicativo(cellPhone.getText()
-				.toString())) {
-			Toast.makeText(this, R.string.numero_invalido, Toast.LENGTH_LONG)
-					.show();
+		} else if(!PhoneNumberUtils.isWellFormedSmsAddress(cellPhone.getText().toString())) {
+			Toast.makeText(this, R.string.numero_invalido, Toast.LENGTH_LONG).show();
 		} else {
-			showNormalUI();
-			alteraEstadoEExecuta(EstadoMainActivity.INICIO);
-			this.onPrepareOptionsMenu(this.mainMenu);
+			new OauthTask(this.getMyMarketApplication(), this.eventOauth).execute(cellPhone.getText().toString());
+			alteraEstadoEExecuta(EstadoMainActivity.AGUARDANDO_PERFIL);
 		}
 	}
 
 	@Override
 	public void processaResultado(Object obj) {
-		Pessoa pessoa = (Pessoa) obj;
-		atualizaPerfil(pessoa);
-		this.estado = EstadoMainActivity.PERFIL;
-		this.estado.executa(this);	
+		if(obj instanceof Pessoa){
+			Pessoa pessoa = (Pessoa) obj;
+			atualizaPerfil(pessoa);
+			alteraEstadoEExecuta(EstadoMainActivity.PERFIL);
+		}else if(obj instanceof String){
+			getMyMarketApplication().setToken((String)obj);
+			showNormalUI();
+			alteraEstadoEExecuta(EstadoMainActivity.INICIO);
+			this.onPrepareOptionsMenu(this.mainMenu);
+		}
 	}
 	
-	public void processarException(Exception e) {
-		Toast.makeText(this, "Erro na busca dos dados", Toast.LENGTH_SHORT).show();	
-	}
-
 	private void atualizaPerfil(Pessoa pessoa) {
 		this.perfil = pessoa;
 	}
@@ -193,8 +188,7 @@ public class MainActivity extends AppBaseActivity implements
 	}
 
 	public void buscarMeuPerfil() {
-		this.buscarMeuPerfilTask = new BuscarMeuPerfilTask(
-				getMyMarketApplication(), this.myPhoneNumber);
+		this.buscarMeuPerfilTask = new BuscarMeuPerfilTask(getMyMarketApplication(), this.myPhoneNumber,this.event);
 		this.buscarMeuPerfilTask.execute();
 	}
 

@@ -1,7 +1,6 @@
-package br.com.mymarket.evento;
+package br.com.mymarket.receivers;
 
 import java.io.Serializable;
-import java.util.List;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,27 +10,28 @@ import android.support.v4.content.LocalBroadcastManager;
 import br.com.mymarket.MyMarketApplication;
 import br.com.mymarket.constants.Constants;
 import br.com.mymarket.delegates.BuscaInformacaoDelegate;
+import br.com.mymarket.delegates.ReceiverDelegate;
 import br.com.mymarket.exception.MyMarketException;
-import br.com.mymarket.model.Produto;
 
-public class EventoProdutoRecebido extends BroadcastReceiver{
+public class OauthReceiver extends BroadcastReceiver implements ReceiverDelegate{
 
     private BuscaInformacaoDelegate delegate;
     
-    public static final String RESULTADO_PRODUTO = "resultadoProduto";
-    public static final String PRODUTO_RECEBIDO = "Produtos Recebido";
-    public static final String PRODUTO_PARAM = "produtos";    
+    public static final String RESULTADO_OAUTH = "resultadoOauth";
+    public static final String OAUTH_RECEBIDO = "Oauth Recebido";
+    public static final String OAUTH_PARAM = "oauth";
 
-    public static EventoProdutoRecebido registraObservador(BuscaInformacaoDelegate delegate){
-    	EventoProdutoRecebido receiver = new EventoProdutoRecebido();
+    public OauthReceiver registraObservador(BuscaInformacaoDelegate delegate){
+    	OauthReceiver receiver = new OauthReceiver();
         receiver.delegate = delegate;
-        LocalBroadcastManager.getInstance(delegate.getMyMarketApplication()).registerReceiver(receiver,new IntentFilter(PRODUTO_RECEBIDO));
+        LocalBroadcastManager.getInstance(delegate.getMyMarketApplication()).registerReceiver(receiver,new IntentFilter(OAUTH_RECEBIDO));
         return receiver;
     }
 
-    public  static void processaResultado(Context context, List<Produto> resultado, boolean sucesso){
-        Intent intent = new Intent(PRODUTO_RECEBIDO);
-        intent.putExtra(RESULTADO_PRODUTO,(Serializable) resultado);
+    public void processaResultado(Context context, Object obj, boolean sucesso){
+    	String resultado = (String) obj;
+        Intent intent = new Intent(OAUTH_RECEBIDO);
+        intent.putExtra(RESULTADO_OAUTH,(Serializable) resultado);
         intent.putExtra(Constants.SUCESSO,sucesso);
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
@@ -43,7 +43,7 @@ public class EventoProdutoRecebido extends BroadcastReceiver{
     @Override
     public void onReceive(Context context, Intent intent) {
         if(intent.getBooleanExtra(Constants.SUCESSO,false) == true){
-        	delegate.processaResultado((List<Produto>) intent.getSerializableExtra(RESULTADO_PRODUTO));
+        	delegate.processaResultado((String) intent.getSerializableExtra(RESULTADO_OAUTH));
         }else{
         	delegate.processarException(new MyMarketException());
         }

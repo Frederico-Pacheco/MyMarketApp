@@ -7,7 +7,9 @@
 	<string name="comum_sim">Sim</string>
 	<string name="comum_sair_app">Deseja realmente sair do aplicativo?</string>
 	<string name="comum_deletar_registro">Deseja realmente deletar este registro?</string>
+	<string name="comum_confirmar_compra">Confirme o valor desta compra.</string>
     <string name="comum_confirmar">Confirmar</string>
+    <string name="comum_cancelar">Cancelar</string>
     <string name="comum_inserir">Inserir</string>
     <string name="comum_alterar">Alterar</string>
     
@@ -38,7 +40,7 @@
     <string name="cxmenu_informacao">Ver Informações</string>
     <string name="cx_menu_enviar_compra">Enviar Compra</string>
     
-    <string name="server_uri">https://blablabla.heroku.com</string>
+    <string name="server_uri">http://mymarketapi.herokuapp.com/api/</string>
     
     <string name="status_offline">Offline</string>
     <string name="status_online">Online</string>
@@ -47,9 +49,18 @@
     <string name="form_list_compras_nome">Nome da Lista de Compras</string>
     <!-- FORM PRODUTOS -->
     <string name="form_produtos_nome">Nome do Produto</string>
+    <!-- FORM GRUPO -->
+    <string name="form_grupo_nome">Nome do Grupo</string>
+
+    <string name="buscar_contatos">Buscar Contatos</string>
     
     <!-- TELAS -->
     <string name="tela_lista_compras">Lista de Compras</string>
+    <string name="tela_grupos">Grupos</string>
+    
+    <!-- POPUP VALOR COMPRA -->
+    <string name="popup_valor_compra">Insira o valor da compra.</string>
+    <string name="admob_id">admob</string>
     
 </resources>
 

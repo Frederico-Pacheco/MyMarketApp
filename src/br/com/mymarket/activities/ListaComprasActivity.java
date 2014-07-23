@@ -14,15 +14,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 import br.com.mymarket.R;
 import br.com.mymarket.constants.Constants;
 import br.com.mymarket.constants.Extras;
 import br.com.mymarket.delegates.BuscaInformacaoDelegate;
-import br.com.mymarket.evento.EventoListaCompraRecebidas;
 import br.com.mymarket.infra.MyLog;
 import br.com.mymarket.model.ListaCompra;
 import br.com.mymarket.navegacao.EstadoListaComprasActivity;
+import br.com.mymarket.receivers.ListaCompraReceiver;
 import br.com.mymarket.tasks.BuscarMaisListaCompraTask;
 
 public class ListaComprasActivity extends AppBaseActivity implements BuscaInformacaoDelegate {
@@ -30,7 +29,7 @@ public class ListaComprasActivity extends AppBaseActivity implements BuscaInform
 	private List<ListaCompra> listaCompra = new ArrayList<ListaCompra>();
 	private EstadoListaComprasActivity estado;
 	private BuscarMaisListaCompraTask buscarMaisListaCompraTask;
-    private EventoListaCompraRecebidas evento;
+    
     private ListaCompra listaCompraSelecionada = null;
 	
     @Override
@@ -39,18 +38,10 @@ public class ListaComprasActivity extends AppBaseActivity implements BuscaInform
         setContentView(R.layout.activity_main);
         registerBaseActivityReceiver();
         this.estado = EstadoListaComprasActivity.INICIO;
-        this.evento = EventoListaCompraRecebidas.registraObservador(this);
+        this.event = new ListaCompraReceiver();
+        this.event.registraObservador(this);
         getActionBar().setTitle(R.string.tela_lista_compras);
     }
-
-    @Override
-    public void onDestroy(){
-        super.onDestroy();
-        MyLog.i("DESTRUIU O PICO");
-        this.evento.desregistra(getMyMarketApplication());
-        unRegisterBaseActivityReceiver();
-    }
-
 
     public void alteraEstadoEExecuta(EstadoListaComprasActivity estado){
         this.estado = estado;
@@ -59,7 +50,7 @@ public class ListaComprasActivity extends AppBaseActivity implements BuscaInform
     
     @Override
     public void onSaveInstanceState(Bundle outState){
-        super.onSaveInstanceState(outState);
+//        super.onSaveInstanceState(outState);
         MyLog.i("SALVANDO ESTADO!!");
         outState.putSerializable(Constants.ESTADO_ATUAL,this.estado);
     }
@@ -79,7 +70,7 @@ public class ListaComprasActivity extends AppBaseActivity implements BuscaInform
     }
 
 	public void buscarListasDeCompras() {
-        this.buscarMaisListaCompraTask = new BuscarMaisListaCompraTask(getMyMarketApplication());
+        this.buscarMaisListaCompraTask = new BuscarMaisListaCompraTask(getMyMarketApplication(),this.event);
         this.buscarMaisListaCompraTask.execute();
 	}
 
@@ -95,23 +86,17 @@ public class ListaComprasActivity extends AppBaseActivity implements BuscaInform
     public void processaResultado(Object obj){
     	List<ListaCompra> listas = (List<ListaCompra>) obj;
     	atualizaListaCom(listas);
-        this.estado = EstadoListaComprasActivity.LISTAS_RECEBIDAS;
-        this.estado.executa(this);	
+    	alteraEstadoEExecuta(EstadoListaComprasActivity.LISTAS_RECEBIDAS);
     }
     
-	public void processarException(Exception e) {
-		Toast.makeText(this, "Erro na busca dos dados", Toast.LENGTH_SHORT).show();	
-	}
 
 	public void persiste(ListaCompra listaCompra) {
 		getListaCompras().add(listaCompra);
 	}
-	
-	
 
 	@Override
 	public void onBackPressed() {
-		if(this.estado == EstadoListaComprasActivity.CADASTRAR_LISTA){
+		if(this.estado == EstadoListaComprasActivity.CADASTRAR_LISTA || this.estado == EstadoListaComprasActivity.INFORMACOES_COMPRAS){
 			alteraEstadoEExecuta(EstadoListaComprasActivity.LISTAS_RECEBIDAS);//FIXME ALTERAR INICIO
 			return;
 		}
@@ -143,6 +128,8 @@ public class ListaComprasActivity extends AppBaseActivity implements BuscaInform
 			Intent produtos = new Intent(this,ProdutosActivity.class);
 			produtos.putExtra(Extras.EXTRA_LISTA_COMPRA, (ListaCompra)getItemSelecionado());
 			startActivity(produtos);
+		}else if(item.getTitle().equals((String)getString(R.string.menu_val_ja_comprado))){
+			alteraEstadoEExecuta(EstadoListaComprasActivity.INFORMACOES_COMPRAS);
 		}
 		return super.onContextItemSelected(item);
 	}
@@ -181,6 +168,9 @@ public class ListaComprasActivity extends AppBaseActivity implements BuscaInform
 			setItemSelecionado(null);
 			alteraEstadoEExecuta(EstadoListaComprasActivity.CADASTRAR_LISTA);
 			return false;
+		} else if (item.getItemId() == R.id.menu_meus_grupos) {
+			startActivity(new Intent(this, GrupoActivity.class));
+			return false;
 		}else if(item.getItemId() == R.id.menu_atualizar){
 			alteraEstadoEExecuta(EstadoListaComprasActivity.INICIO);
 			return false;
@@ -190,6 +180,7 @@ public class ListaComprasActivity extends AppBaseActivity implements BuscaInform
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		MenuItem item = menu.findItem(R.id.menu_lista_compras);

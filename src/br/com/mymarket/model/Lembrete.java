@@ -1,28 +1,33 @@
 package br.com.mymarket.model;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 
-import br.com.mymarket.utils.DateUtils;
-
 public class Lembrete implements Serializable {
-
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 5946298131703457549L;
+	private static final long serialVersionUID = -6613141933822395382L;
 
 	private long id;
 	
-	private String nome;
+	private String titulo;
 	
-	private Date data;
+	private String mensagem;
 	
 	private Pessoa pessoa;
 	
-	public Lembrete(String nome, Date data) {
-		this.nome=nome;
-		this.data=data;
+	private Calendar dataCriacao;
+	
+	private Calendar dataAlteracao;
+
+	public Lembrete(String mensagem, Date dataCriacao) {
+		this.mensagem = mensagem;
+		Calendar data = Calendar.getInstance();
+		data.setTime(dataCriacao);
+		this.dataCriacao = data;
 	}
 
 	public long getId() {
@@ -33,20 +38,20 @@ public class Lembrete implements Serializable {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getTitulo() {
+		return titulo;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
 
-	public Date getData() {
-		return data;
+	public String getMensagem() {
+		return mensagem;
 	}
 
-	public void setData(Date data) {
-		this.data = data;
+	public void setMensagem(String mensagem) {
+		this.mensagem = mensagem;
 	}
 
 	public Pessoa getPessoa() {
@@ -57,11 +62,19 @@ public class Lembrete implements Serializable {
 		this.pessoa = pessoa;
 	}
 
-	public String getFormatDate() {
-		return DateUtils.formatDate(this.getData());
+	public Calendar getDataCriacao() {
+		return dataCriacao;
 	}
 
-	public String getFormatHour() {
-		return DateUtils.formatHour(this.getData());
+	public void setDataCriacao(Calendar dataCriacao) {
+		this.dataCriacao = dataCriacao;
+	}
+
+	public Calendar getDataAlteracao() {
+		return dataAlteracao;
+	}
+
+	public void setDataAlteracao(Calendar dataAlteracao) {
+		this.dataAlteracao = dataAlteracao;
 	}
 }

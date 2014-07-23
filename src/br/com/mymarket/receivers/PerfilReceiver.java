@@ -1,7 +1,6 @@
-package br.com.mymarket.evento;
+package br.com.mymarket.receivers;
 
 import java.io.Serializable;
-import java.util.List;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,12 +10,11 @@ import android.support.v4.content.LocalBroadcastManager;
 import br.com.mymarket.MyMarketApplication;
 import br.com.mymarket.constants.Constants;
 import br.com.mymarket.delegates.BuscaInformacaoDelegate;
+import br.com.mymarket.delegates.ReceiverDelegate;
 import br.com.mymarket.exception.MyMarketException;
-import br.com.mymarket.infra.MyLog;
-import br.com.mymarket.model.ListaCompra;
 import br.com.mymarket.model.Pessoa;
 
-public class EventoPerfilRecebido extends BroadcastReceiver{
+public class PerfilReceiver extends BroadcastReceiver implements ReceiverDelegate{
 
     private BuscaInformacaoDelegate delegate;
     
@@ -24,14 +22,15 @@ public class EventoPerfilRecebido extends BroadcastReceiver{
     public static final String PERFIL_RECEBIDO = "Perfil Recebido";
     public static final String PERFIL_PARAM = "perfil";
 
-    public static EventoPerfilRecebido registraObservador(BuscaInformacaoDelegate delegate){
-    	EventoPerfilRecebido receiver = new EventoPerfilRecebido();
+    public PerfilReceiver registraObservador(BuscaInformacaoDelegate delegate){
+    	PerfilReceiver receiver = new PerfilReceiver();
         receiver.delegate = delegate;
         LocalBroadcastManager.getInstance(delegate.getMyMarketApplication()).registerReceiver(receiver,new IntentFilter(PERFIL_RECEBIDO));
         return receiver;
     }
 
-    public  static void processaResultado(Context context, Pessoa resultado, boolean sucesso){
+    public void processaResultado(Context context, Object obj, boolean sucesso){
+    	Pessoa resultado = (Pessoa) obj;
         Intent intent = new Intent(PERFIL_RECEBIDO);
         intent.putExtra(RESULTADO_PERFIL,(Serializable) resultado);
         intent.putExtra(Constants.SUCESSO,sucesso);

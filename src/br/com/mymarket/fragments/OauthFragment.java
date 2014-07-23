@@ -16,7 +16,7 @@ public class OauthFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_oauth, null);
+        View view = inflater.inflate(R.layout.fragment_oauth, null);
         final MainActivity activity = ((MainActivity)this.getActivity());
         TelephonyManager tMgr = (TelephonyManager)activity.getSystemService(Context.TELEPHONY_SERVICE);
         String myPhoneNumber = tMgr.getLine1Number();

@@ -10,22 +10,23 @@ import android.os.Bundle;
 import android.view.ActionMode;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.EditText;
 import br.com.mymarket.R;
 import br.com.mymarket.adapters.ProdutosAdapter;
 import br.com.mymarket.constants.Constants;
 import br.com.mymarket.constants.Extras;
 import br.com.mymarket.delegates.BuscaInformacaoDelegate;
-import br.com.mymarket.evento.EventoProdutoRecebido;
-import br.com.mymarket.infra.ActionModeCallback;
+import br.com.mymarket.infra.ActionModeProdutoCallback;
 import br.com.mymarket.infra.MyLog;
 import br.com.mymarket.model.ListaCompra;
 import br.com.mymarket.model.Produto;
 import br.com.mymarket.navegacao.EstadoProdutosActivity;
+import br.com.mymarket.receivers.ProdutoReceiver;
 import br.com.mymarket.tasks.BuscarProdutosTask;
 
 public class ProdutosActivity extends AppBaseActivity implements BuscaInformacaoDelegate{
@@ -33,7 +34,6 @@ public class ProdutosActivity extends AppBaseActivity implements BuscaInformacao
 	private ListaCompra listaCompra = null;
 	private List<Produto> produtos = new ArrayList<Produto>();
 	private EstadoProdutosActivity estado;
-	private EventoProdutoRecebido evento;
 	private BuscarProdutosTask buscarProdutosTask;
 	private Produto itemSelecionado;
 	private int posicaoItemSelecionado;
@@ -47,7 +47,7 @@ public class ProdutosActivity extends AppBaseActivity implements BuscaInformacao
         registerBaseActivityReceiver();
         this.listaCompra = (ListaCompra) getIntent().getSerializableExtra(Extras.EXTRA_LISTA_COMPRA);
         this.estado = EstadoProdutosActivity.INICIO;
-        this.evento = EventoProdutoRecebido.registraObservador(this);
+        this.event = new ProdutoReceiver().registraObservador(this);
 	}
 	
 	@Override
@@ -92,12 +92,14 @@ public class ProdutosActivity extends AppBaseActivity implements BuscaInformacao
 			alteraEstadoEExecuta(EstadoProdutosActivity.CADASTRAR);
 		}else if(item.getTitle().equals((String)getString(R.string.menu_val_sel_produtos))){
 			onListItemSelect(getItemSelecionado(),getPosicaoItemSelecionado());
+		}else if(item.getTitle().equals((String)getString(R.string.cxmenu_informacao))){
+			alteraEstadoEExecuta(EstadoProdutosActivity.INFORMACOES);
 		}
 		return super.onContextItemSelected(item);
 	}
 	
 	public void buscarProdutos() {
-        this.buscarProdutosTask = new BuscarProdutosTask(getMyMarketApplication(),this.listaCompra);
+        this.buscarProdutosTask = new BuscarProdutosTask(getMyMarketApplication(),this.listaCompra,this.event);
         this.buscarProdutosTask.execute();
 	}
 
@@ -108,15 +110,10 @@ public class ProdutosActivity extends AppBaseActivity implements BuscaInformacao
 
     public void processaResultado(Object obj){
     	List<Produto> listas = (List<Produto>) obj;
-    	atualizaListaCom(listas);  
-        this.estado = EstadoProdutosActivity.LISTAGEM;
-        this.estado.executa(this);
+    	atualizaListaCom(listas);
+    	alteraEstadoEExecuta(EstadoProdutosActivity.LISTAGEM);
     }
     
-	public void processarException(Exception e) {
-		Toast.makeText(this, "Erro na busca dos dados", Toast.LENGTH_SHORT).show();	
-	}
-	
 	private void atualizaListaCom(List<Produto> listas) {
 	   getProdutos().clear();
 	   getProdutos().addAll(listas);
@@ -126,17 +123,9 @@ public class ProdutosActivity extends AppBaseActivity implements BuscaInformacao
 		return this.produtos;
 	}
 
-	@Override
-    public void onDestroy(){
-        super.onDestroy();
-        MyLog.i("DESTRUIU O PICO");
-        this.evento.desregistra(getMyMarketApplication());
-        unRegisterBaseActivityReceiver();
-    }
-    
     @Override
     public void onSaveInstanceState(Bundle outState){
-        super.onSaveInstanceState(outState);
+//        super.onSaveInstanceState(outState);
         MyLog.i("SALVANDO ESTADO!!");
         outState.putSerializable(Constants.ESTADO_ATUAL,this.estado);
     }
@@ -192,12 +181,16 @@ public class ProdutosActivity extends AppBaseActivity implements BuscaInformacao
 			onListItemSelect(produto,posicao);
 		}
 	}
+	
 	@Override
 	public void onBackPressed() {
 		if(getActionMode() != null){
 			resetActionMode();
 			return;
-		}
+		}else if(this.estado == EstadoProdutosActivity.CADASTRAR || this.estado == EstadoProdutosActivity.INFORMACOES){
+			alteraEstadoEExecuta(EstadoProdutosActivity.INICIO);//FIXME ALTERAR INICIO
+			return;
+		}		
 		super.onBackPressed();
 	}
 	
@@ -208,7 +201,7 @@ public class ProdutosActivity extends AppBaseActivity implements BuscaInformacao
 		getAdapter().toggleSelection(posicao);
 		boolean hasCheckedItems = getAdapter().getSelectedCount() > 0;
 		if (hasCheckedItems && getActionMode() == null){
-			this.mActionMode = startActionMode(new ActionModeCallback(this));
+			this.mActionMode = startActionMode(new ActionModeProdutoCallback(this));
 		}else if (!hasCheckedItems && getActionMode() != null){
 			getActionMode().finish();
 		}
@@ -220,12 +213,6 @@ public class ProdutosActivity extends AppBaseActivity implements BuscaInformacao
 	}
   }
 
-	public void confirmarCompra() {
-		MyLog.i("YAY!");
-		// TODO ABRIR POPUP INFORMANDO O PRECO PAGO.
-		//CONFIRMAR
-	}
-	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.simple_menu_form, menu);
@@ -251,4 +238,25 @@ public class ProdutosActivity extends AppBaseActivity implements BuscaInformacao
 	public void persiste(Produto produto) {
 		getProdutos().add(produto);
 	}
+	
+	public void popupConfirmarCompra(final List<Produto> listProdutosSelecionados){
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+		alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+		alertDialog.setTitle(R.string.app_name);
+		alertDialog.setMessage(R.string.comum_confirmar_compra);
+		LayoutInflater inflater = getLayoutInflater();
+		View inflate = inflater.inflate(R.layout.popup, null);
+		final EditText editText = (EditText) inflate.findViewById(R.id.popup_valor_compra);
+		alertDialog.setView(inflate);
+		alertDialog.setPositiveButton(R.string.comum_confirmar, new OnClickListener() {
+			@Override
+			public void onClick(DialogInterface arg0, int arg1) {
+				//FIXME CHAMAR POST PARA GERAR COMPRA. 
+				MyLog.i(listProdutosSelecionados.size()+" - " + editText.getText());
+			}
+		});
+		alertDialog.setNegativeButton(R.string.comum_cancelar, null);
+		alertDialog.show();
+	}
+	
 }

@@ -12,11 +12,36 @@ android:layout_height="match_parent">
 	      android:id="@+id/status_conexao" 
 	      android:textColor="@color/abc_search_url_text_selected"/>
 	    
-	    <TextView android:layout_width="match_parent"
+	    <TextView 
+	      android:layout_width="match_parent"
 	      android:layout_height="wrap_content" 
 	      android:text="INFO BLABLABLA"
 	      android:id="@+id/info"
 	      android:textColor="@color/abc_search_url_text_selected"/>
 	    
+	    
+	    
+	    <EditText 
+	        android:id="@+id/teste_lembrete"
+			android:layout_width="match_parent"
+	      	android:layout_height="wrap_content"	        
+	        />
+
+
+       <Button
+       	   android:id="@+id/botao_lembrete"
+		   android:text="@string/comum_confirmar"       	   
+           style="@style/ShadowText"
+       	   android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="15dp"
+           android:background="@drawable/button_background_disabled"
+           android:gravity="center"
+           android:onClick="acessarApk"
+           android:padding="10dp"
+           android:textColor="@color/text"
+           android:textSize="20sp"
+           android:textStyle="bold" />    	
+               	    
 	</LinearLayout>
 </ScrollView>
